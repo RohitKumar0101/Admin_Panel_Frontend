@@ -1,0 +1,286 @@
+.flex-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
+}
+
+.label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.3rem;
+    font-size: small;
+    width: 100%;
+    font-weight: bold;
+}
+
+.password {
+    display: flex;
+    gap: 0.1rem;
+    /* font-size: x-small; */
+    
+}
+
+.password-err {
+    font-size: x-small;
+    color: red;
+    font-weight: 600;
+}
+
+.main-container {
+    height: 100vh;
+    /* width: 230rem; */
+    background-image: url("../../images/21931436.jpg");
+    background-size: cover;
+
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+}
+
+
+.signUp-form-container {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    align-items: center;
+ 
+}
+.error-signUp{
+    font-size: x-small;
+    color: red;
+    width: 100% ;
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+
+
+.signIn-text {
+    font-size: xx-large;
+    font-weight: bolder;
+    opacity: 90%;
+
+}
+
+.signUp-text {
+    font-size: xx-large;
+    font-weight: bolder;
+    opacity: 90%;
+}
+
+.signIn-button {
+    height: 2.5rem;
+    width: 40%;
+    border-radius: 2rem;
+    /* border: 1px; */
+    background-color: #0085CA;
+    border-color: whitesmoke;
+    color: white;
+    cursor: pointer;
+}
+
+.signIn-button:hover{
+    background-color: black;
+    color: white;
+}
+
+.xh1{
+    font-size: xx-large;
+}
+
+ .h1{
+    font-size: x-large;
+}
+
+ .h2{
+    font-size: large;
+    margin-bottom: 5px;
+    
+}
+
+.h4{
+    font-size: medium;
+    margin-bottom: 10px;
+}
+
+.signUp-button {
+    border-radius: 1rem;
+    border-radius: none;
+    border-color: whitesmoke;
+    background-color: white;
+    color: #0085CA;
+    cursor: pointer;
+    width: 20%;
+    height: 1.9rem;
+    font-weight: bolder;
+}
+.signUp-button:hover{
+    background-color: black;
+    color: white;
+}
+
+.signIn-details-button {
+    border-radius:.9rem;
+    border-radius: none;
+    border-color: whitesmoke;
+    background-color: white;
+    color: #0085CA;
+    cursor: pointer;
+    width: 20%;
+    height: 1.9rem;
+    font-weight: bolder;
+}
+
+.signIn-details-button:hover{
+    background-color: black;
+    color: white;
+}
+
+
+.forgot-text {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.content-container {
+    margin-bottom: 3rem;
+    height: 70%;
+    width: 60%;
+    opacity: 85%;
+    display: flex;
+    
+}
+
+.content-container-signIn {
+    height: 100%;
+    width: 50%;
+    border-radius: 4rem 0rem 0rem 4rem;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 1px 4px 1px  ;
+    /* box-shadow: 1px 1px 1px 1px; */
+
+
+}
+
+.mobile{
+    gap:1rem
+}
+
+.content-container-signIn-details {
+    height: 100%;
+    width: 50%;
+    border-radius: 4rem 0rem 0rem 4rem;
+    background-color: #0085CA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 1px 4px 2px  ;
+    /* box-shadow: 1px 1px 1px 1px; */
+    
+
+
+}
+
+.confirm-password{
+    gap:.5rem
+}
+
+.content-container-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 100%;
+    
+
+}
+
+.register {
+    border-radius: 1rem;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+}
+
+.field {
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 1rem;
+    font-weight:400;
+    font-size:medium;
+   
+    background-color: #F0F0F0;
+    border: none;
+    padding-left: 4px;
+}
+
+.field::placeholder {
+    color: black;
+    font-weight: 600;
+    padding-left: 2px;
+    opacity: 60%;
+}
+
+.confirm-password::placeholder {
+    font-size:x-small;
+    padding-left: 0px;
+}
+
+.password::placeholder {
+    font-size: x-small;
+    
+}
+
+.field:focus {
+    outline: none;
+}
+
+.content-container-signUp {
+    background-color: white;
+    height: 100%;
+    width: 50%;
+    border-radius: 0rem 4rem 4rem 0rem;
+    box-shadow: 2px 1px 4px 1px ;
+
+
+}
+
+.content-container-signUp-details {
+    height: 100%;
+    width: 50%;
+    border-radius: 0rem 4rem 4rem 0rem;
+    background-color: #0085CA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 1px 4px 1px ;
+
+}
+
+.form-container {
+    width: 50%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .6rem;
+    /* align-items:flex-start; */
+}
+
+
+/* Input type number Auto Increment Hide */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}

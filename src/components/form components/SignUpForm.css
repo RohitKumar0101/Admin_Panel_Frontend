@@ -1,0 +1,17 @@
+.error{
+    font-size: x-small;
+    color: red;
+    width: 54% ;
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.password-error{
+    width: 55%;
+    font-size: x-small;
+    color: red;
+    display: flex;
+    justify-self: flex-end;
+    justify-content:flex-start;
+}
