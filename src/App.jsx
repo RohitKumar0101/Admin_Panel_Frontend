@@ -7,17 +7,26 @@ import { Layout } from './Layout/Layout';
 import { Footer } from './components/form components/Footer/Footer';
 import { Profile } from './Pages/ProfilePage/Profile';
 import React from 'react';
+import { Listing } from './Pages/ListingPage/Listing';
+import { BlockPage } from './Pages/BlockPage/BlockPage';
 
 
 function App() {
   const [file,setFile] = React.useState();
+  const [open, setOpen] = React.useState(false);
+
+  const handleSnacker = ()=>{
+    setOpen(prev=>!prev);
+  }
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path='/' element={<Login />}/>
+          <Route path='/' element={<Login open={open} handleSnacker={handleSnacker}/>}/>
           {/* <Route path='/layout' element={<Layout file={file}/>} /> */}
-          <Route path='/profile' element={<Profile file={file} setFile={setFile}/>} />
+          <Route path='/profile' element={<Profile file={file} setFile={setFile} open={open} handleSnacker={handleSnacker}/>} />
+          <Route path='/listing' element={<Listing file={file}/>} />
+          <Route path='/block' element={<BlockPage file={file}/>} />
         </Routes>
       </Router>
     </div>

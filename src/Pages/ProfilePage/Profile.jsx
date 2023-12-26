@@ -9,16 +9,29 @@ import { hover } from "@testing-library/user-event/dist/hover";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import EditTable from "../../components/form components/modal/modal";
+import { useLocation } from "react-router-dom";
+import { Tooltip } from "@mui/material";
 
-export const Profile = ({ file,setFile,className }) => {
+export const Profile = ({ file,setFile,className,open,handleSnacker}) => {
+    //  handleSnacker();
     // const [file, setFile] = useState();
     const [userDetails,setUserDetails] = useState({fullName:"John smith",email:"JohnSmith@gmail.com",mobile:+914142314123,address:"CA,LosAngelos-America",designation:"Fullstack Developer"});
+    
+    const userInfo = JSON.parse(localStorage.getItem("LoggedUserData"));
+
+
+    const myLocation = useLocation().pathname.substring(1);
+    if(myLocation === "profile"){
+        console.log("error");
+    }
 
 
     const onDrop = useCallback(acceptedFiles => {    // This funciton will only run whenever i dropped any file
 
         console.log(URL.createObjectURL(acceptedFiles[0]));
-        setFile(URL.createObjectURL(acceptedFiles[0]));
+        // localStorage.setItem(URL.createObjectURL(acceptedFiles[0]));
+        userInfo.Image = (URL.createObjectURL(acceptedFiles[0]));
+        localStorage.setItem("LoggedUserData",JSON.stringify(userInfo));
         // const url = URL.createObjectURL(acceptedFiles.)
 
     })
@@ -80,15 +93,17 @@ export const Profile = ({ file,setFile,className }) => {
                             <input {...getInputProps()} />
                             {/* {isDragActive ? (<p>Drop Files here...</p>) : (<p>Drag some files</p>)} */}
                             <div className="w-full h-40  flex justify-center items-center rounded-full group  cursor-pointer  relative"  >
-                                {file ? <img src={file} alt="Upload Image..." className="rounded-full group hover:opacity-30  h-full w-full " /> : <PersonOutlineIcon sx={{ "&:hover": { opacity: "0.7" } }} style={PersonOutlineStyle} />}
-                                <div className=" hidden  group-hover:block h-full w-full rounded-full bg-gray-100 bg-opacity-60 absolute p-12"><AddAPhotoIcon style={{height:"70%",width:"70%"}}/></div>
+                               
+                                {userInfo.Image ?  <img src={userInfo.Image} alt="Upload Image..." className="rounded-full group hover:opacity-30  h-full w-full object-fill" /> : <PersonOutlineIcon sx={{ "&:hover": { opacity: "0.7" } }} style={PersonOutlineStyle} />}
+                               
+                                <div className=" hidden  group-hover:block h-full w-full rounded-full bg-gray-100 bg-opacity-60 absolute p-12"><Tooltip title="Change picture" arrow><AddAPhotoIcon style={{height:"70%",width:"70%"}}/></Tooltip></div>
                             </div>
                         </div>
                     </div>
                     <hr className="w-full" />
                     <div className="flex flex-col gap-2">
 
-                        <span className="text-3xl font-bold opacity-70">{userDetails.fullName}</span>
+                        <span className="text-3xl font-bold opacity-70">{userInfo.name}</span>
                         <span className="text-xl font-semibold opacity-60" > {userDetails.designation}</span>
                         <span className="text-lg  font-medium opacity-50">{userDetails.address}</span>
                     </div>
@@ -104,7 +119,7 @@ export const Profile = ({ file,setFile,className }) => {
                                     <span className="ml-4 text-lg font-semibold opacity-80">Full Name</span>
                                 </div>
                                 <div className="w-3/5 flex justify-start">
-                                    <span className="text-lg font-normal opacity-70">{userDetails.fullName}</span>
+                                    <span className="text-lg font-normal opacity-70">{userInfo.name}</span>
                                 </div>
                             </div>
                             <span className="border border-current w-full  opacity-20 mt-7" ></span>
@@ -116,7 +131,7 @@ export const Profile = ({ file,setFile,className }) => {
                                     <span className="ml-4 text-lg font-semibold opacity-80">Email</span>
                                 </div>
                                 <div className="w-3/5 flex justify-start">
-                                    <span className="text-lg font-normal opacity-70">{userDetails.email}</span>
+                                    <span className="text-lg font-normal opacity-70">{userInfo.email}</span>
                                 </div>
                             </div>
                             <span className="border border-current w-full  opacity-20 mt-7" ></span>
@@ -166,7 +181,7 @@ export const Profile = ({ file,setFile,className }) => {
                         <div className="flex justify-start gap-6"></div> */}
                         <div className="absolute w-full h-full flex justify-end">
                            
-                        <EditTable userDetails={userDetails} setUserDetails={setUserDetails}/>
+                        <EditTable userDetails={userDetails} setUserDetails={setUserDetails} snackerOpen={open} handleSnacker={handleSnacker}/>
                         </div>
                     </div>
                 </div >

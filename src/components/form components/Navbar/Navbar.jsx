@@ -13,15 +13,17 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function Navbar({file}) {
+function Navbar({userInfo}) {
+  const myLocation = useLocation().pathname.substring(1);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  
+  const navigate = useNavigate();
 
 
   const PersonOutlineStyle =
@@ -39,34 +41,38 @@ function Navbar({file}) {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (e) => {
+    if(e.target.id !== undefined){
+       if(e.target.id === "Logout")
+       navigate("/");
+    }
     setAnchorElUser(null);
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#5b9cc2' }} >
+    <AppBar position="sticky" sx={{ backgroundColor:'#5b9cc2 !important'} }>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
-            variant="h6"
+            variant="h6 !important"
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
+              display: { xs: 'flex !important', md: 'flex !important' },
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: '',
               textDecoration: 'none',
             }}
           >
             
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'} }}> */}
             {/* <IconButton
               size="large"
               aria-label="account of current user"
@@ -101,8 +107,8 @@ function Navbar({file}) {
                 </MenuItem>
               ))}
             </Menu> */}
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          {/* </Box> */}
+          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           {/* <Typography
             variant="h5"
             noWrap
@@ -121,15 +127,15 @@ function Navbar({file}) {
           >
             LOGO
           </Typography> */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <h1 className='text-3xl font-medium font-mono'>Profile</h1>
+          <Box sx={{ flexGrow: 1,display:"flex !important" }}>
+            <h1 className='text-3xl font-medium font-mono'>{myLocation}</h1>
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, display: {xs:"flex",sm:"flex",md:"flex",}}}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0,height:"3rem",width:"3rem" }}>
                 {/* {file?<Avatar alt="Remy Sharp"  src={file}/>:<PersonOutlineIcon sx={{ "&:hover": { opacity: "0.7" } }} style={PersonOutlineStyle} /> } */}
-                {file ? <img src={file} alt="Upload Image..." className="rounded-full group hover:opacity-30 h-full w-full" /> : <div className='h-3/4 w-3/4'> <PersonOutlineIcon sx={{ "&:hover": { opacity: "0.7" } }} style={ {borderRadius: "100%",height:"100%",width:"100%", backgroundColor: "#B9D9EB",color:"black", cursor: "pointer" }} /></div>}
+                {userInfo ? <img src={userInfo.Image} alt="Upload Image..." className="rounded-full  h-full w-full object-fill" /> : <div className='h-full w-full '> <PersonOutlineIcon style={ {borderRadius: "100%",height:"100%",width:"100%",padding:"4px", backgroundColor: "#B9D9EB",color:"black", cursor: "pointer" }} /></div>}
 
               </IconButton>
             </Tooltip>
@@ -150,8 +156,8 @@ function Navbar({file}) {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting}  onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" id={setting}>{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
