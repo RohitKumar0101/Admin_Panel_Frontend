@@ -4,7 +4,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export const BlockPage = ({file})=>{
     return <Layout file={file}>
-        <div className=" bg-gray-100 p-5">
+        <div className=" bg-gray-100 p-2">
 
        <CKEditor
                     editor={ ClassicEditor }

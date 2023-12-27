@@ -2,3 +2,22 @@
     margin-bottom: 15px;
     background-color: blue;
 }
+
+.btnFacebook{
+    width: 40px;
+    height:39px;  
+    border-radius: 3px;
+    border-color: white;
+    /* font-size:smaller; */
+    background: #3b5998;
+    color:white;
+    border:0px transparent;
+    display: flex;  
+    gap: 5px;
+    justify-content:center;
+    align-items: center;
+    /* text-align: center; */
+    margin:5px;
+    /* display: inline-block; */
+    /* padding: 4px; */
+}

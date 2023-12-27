@@ -11,12 +11,16 @@ import CustomSnackbar from "../Snackbar/Snackbar";
 import GoogleIcon from '@mui/icons-material/Google';
 import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import FacebookLogin from 'react-facebook-login';
+import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
+import { LinkedIn } from "react-linkedin-login-oauth2";
+
 // import jwt_decode from 'jwt-decode';
 
 export const SignInForm = ({ open, handleSnacker }) => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState();
-    const [userInfo,setUserInfo] = React.useState({});
+    const [userInfo, setUserInfo] = React.useState({});
 
 
     const navigate = useNavigate();
@@ -38,7 +42,7 @@ export const SignInForm = ({ open, handleSnacker }) => {
 
     }
 
-    
+
 
     const setFields = () => {
         console.log(email);
@@ -73,29 +77,73 @@ export const SignInForm = ({ open, handleSnacker }) => {
         }
     });
 
+    const responseFacebook = (response) => {
+        console.log(response);
+    }
+
 
     return <div className="flex flex-col items-center justify-start mt-10 w-full h-full">
         <div className=" flex flex-col items-center justify-around  h-1/4 w-full">
-            <div className="flex gap-3  justify-around w-1/3">
+            <div className="flex justify-center items-center ml-2 w-1/3">
 
                 {/* <GoogleIcon style={{ height: "40px", width: "40px", cursor: "pointer" }} onClick={() => login()} /> */}
 
                 <GoogleLogin
                     onSuccess={credentialResponse => {
-                        localStorage.setItem("UserLoggedToken",credentialResponse.credential);
+                        localStorage.setItem("UserLoggedToken", credentialResponse.credential);
                         const obj = jwtDecode(credentialResponse.credential);
                         setUserInfo(obj);
-                        const obj1 =  {name:obj.name,email:obj.email};
+                        const obj1 = { name: obj.name, email: obj.email };
                         console.log(obj)
-                        localStorage.setItem("LoggedUserData",JSON.stringify({"name":obj.name,"email":obj.email,Image:obj.picture}));
+                        localStorage.setItem("LoggedUserData", JSON.stringify({ "name": obj.name, "email": obj.email, Image: obj.picture }));
                         navigate("/profile");
                     }}
                     onError={() => {
                         console.log('Login Failed');
                     }}
                     useOneTap
-                    auto_select
+                    type="icon"
+
                 />
+                <FacebookLogin
+                    appId={752500006736001}
+                    // autoLoad={true}
+                    fields="name, email, picture"
+                    scope="public_profile,email"
+                    callback={responseFacebook}
+                    icon="fa-facebook"
+                    cssClass="btnFacebook"
+                    textButton=""
+                    render={(renderProps) => (
+                        <button onClick={renderProps.onClick}>FB button</button>
+                    )}
+                />,
+
+                <LinkedIn
+                    clientId="7854zhwebbvxu5"
+                    redirectUri={`${window.location.origin}`}
+                    onSuccess={(code) => {
+                        console.log(code);
+                    }}
+                    onError={(error) => {
+                        console.log(error);
+                    }}
+                >
+                    {({ linkedInLogin }) => (
+                        <img
+                            onClick={linkedInLogin}
+                            src={linkedin}
+                            alt="Hello"
+                            style={{ maxWidth: '180px', cursor: 'pointer' }}
+                        />
+                        
+                        
+                    )}
+                </LinkedIn>
+
+
+
+
 
                 {/* <TwitterIcon style={{ height: "40px", width: "40px", cursor: "pointer" }} onClick={() => window.open('https://twitter.com/i/flow/login')} />
                 <LinkedInIcon style={{ height: "40px", width: "40px", cursor: "pointer" }} onClick={() => window.open('https://www.linkedin.com/login')} /> */}
