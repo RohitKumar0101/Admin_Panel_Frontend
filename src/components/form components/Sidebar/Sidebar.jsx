@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import "./Sidebar.css"
 import { useDropzone } from 'react-dropzone';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -30,6 +31,10 @@ export const Sidebar = ({ userInfo }) => {
   const RedirectLoginEvent = () => {
     // window.location.href="/login";
     navigate("/");
+  }
+
+  const RedirectToCategories = ()=>{
+    navigate("/categories");
   }
 
   const RedirectToProfile = () => {
@@ -72,6 +77,11 @@ export const Sidebar = ({ userInfo }) => {
       <div className={updatedLocation == "profile" ? 'login hover:text-white  hover:bg-blue-500 hover:text-opacity-100  cursor-pointer  flex items-center justify-start h-10 text-white  bg-blue-500  gap-5 mb-2 w-full' : 'login hover:text-white  hover:bg-blue-500 hover:text-opacity-100  cursor-pointer  flex items-center justify-start h-10   bg-blue-200  gap-5 mb-2 w-full'} onClick={RedirectToProfile}>
         <AccountBoxIcon style={{ marginLeft: "60px" }} />
         <h1 className='font-seris  break-all'>Profile</h1>
+      </div>
+
+      <div className={updatedLocation == "categories" ? 'login hover:text-white  hover:bg-blue-500 hover:text-opacity-100  cursor-pointer  flex items-center justify-start h-10 text-white  bg-blue-500  gap-5 mb-2 w-full' : 'login hover:text-white  hover:bg-blue-500 hover:text-opacity-100  cursor-pointer  flex items-center justify-start h-10   bg-blue-200  gap-5 mb-2 w-full'} onClick={RedirectToCategories}>
+        <ViewModuleIcon style={{ marginLeft: "60px" }} />
+        <h1 className='font-seris  break-all'>Categories</h1>
       </div>
 
 
