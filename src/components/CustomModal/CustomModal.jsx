@@ -4,21 +4,17 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import EditIcon from '@mui/icons-material/Edit';
-import { SignUpForm } from '../SignUpFrom';
-import { EditTableForm } from '../EditTableForm/EditTableForm';
-import CloseIcon from '@mui/icons-material/Close';
 import { Tooltip } from '@mui/material';
-import { hover } from '@testing-library/user-event/dist/hover';
-import { blue, green } from '@mui/material/colors';
-import CustomSnackbar from '../../Snackbar/Snackbar';
+// import CustomSnackbar from '../../Snackbar/Snackbar';
+import { InventoryForm } from '../InventoryForm/InventoryForm';
 
 const style = {
   position: 'absolute',
-  top: '50%',
+  top: '45%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 550,
-  height: 600,
+  width: 650,
+  height: 500,
   backgroundColor: "white",
   boxShadow: 24,
   borderRadius: 3,
@@ -27,22 +23,18 @@ const style = {
 };
 
 
-export const EditTable = ({ setIsSignUP, setUserDetails, userDetails,snackerOpen,handleSnacker })=>{
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+export const CustomModal = ({open,handleOpen,handleClose,children})=>{
 
-  return (
-    <div>
-      <Tooltip title="Edit details" arrow>
-        <Button sx={{
+  return (<div>
+      {/* <Tooltip title="Edit details" arrow> */}
+        {/* <Button sx={{
           "&:hover": {
             color: "blue",
             backgroundColor: "lightBLue !important",
             boxShadow: "none !important",
           }
-        }} onClick={handleOpen}><EditIcon style={{ color: "gray" }} /></Button>
-      </Tooltip>
+        }} onClick={handleOpen}><EditIcon style={{ color: "gray" }} /></Button> */}
+      {/* </Tooltip> */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -54,11 +46,11 @@ export const EditTable = ({ setIsSignUP, setUserDetails, userDetails,snackerOpen
             <button onClick={handleClose}><CloseIcon sx={{'&:hover':{backgroundColor:"lightBLue"}}} style={{ color: "red",height:"20px",borderRadius:"3px"}} /></button>
           </div> */}
           <div className='relative mt-7'>
-            <EditTableForm userDetails={userDetails} setUserDetails={setUserDetails} handleClose={handleClose} open={snackerOpen} handleSnacker={handleSnacker} />
+            {children}
           </div>
         </Box>
       </Modal>
-        <CustomSnackbar open={snackerOpen}  message="Changes updated successfully" />
+        {/* <CustomSnackbar open={snackerOpen}  message="Changes updated successfully" /> */}
     </div>
   );
 }
