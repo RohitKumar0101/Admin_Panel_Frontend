@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import { Button, TableFooter, TablePagination, Tooltip } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { DateFormatConverter, HandleTableId } from '../../utility/Common';
+import { DateFormatConverter, GetCategoryDetailsByID, HandleTableId } from '../../utility/Common';
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -122,7 +122,8 @@ export const ProductTable = ({ShowNewProducts,handleProductDeleteSnackbar,Produc
         <TableRow>
           <TableCell align='center' style={{ fontWeight: "bolder" }}>id</TableCell>
           <TableCell align="center" style={{ fontWeight: "bolder" }}>Product Name</TableCell>
-          <TableCell align="center" style={{ fontWeight: "bolder" }}>Category Name</TableCell>
+          <TableCell align="center" style={{ fontWeight: "bolder" }} width={200}>Category Name</TableCell>
+          <TableCell align="center" style={{ fontWeight: "bolder" }}>Category ID</TableCell>
           <TableCell align="center" style={{ fontWeight: "bolder" }}>Quantity</TableCell>
           <TableCell align="center" style={{ fontWeight: "bolder" }}>PerUnit Price</TableCell>
           <TableCell align="center" style={{ fontWeight: "bolder" }}>Created Date</TableCell>
@@ -131,9 +132,9 @@ export const ProductTable = ({ShowNewProducts,handleProductDeleteSnackbar,Produc
         </TableRow>
       </TableHead>
       <TableBody >
-        {((rowsPerPage>0 && ProductsArray) ? ProductsArray.slice(page*rowsPerPage,page*rowsPerPage + rowsPerPage):ProductsArray).map((row, key) => (
+        {((rowsPerPage>0 && ProductsArray) ? ProductsArray.slice(page*rowsPerPage,page*rowsPerPage + rowsPerPage):ProductsArray).map((row) => (
           <TableRow
-            key={row.CategoryName}
+            key={row.ID}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }} 
             
           >
@@ -142,6 +143,7 @@ export const ProductTable = ({ShowNewProducts,handleProductDeleteSnackbar,Produc
             </TableCell>
             <TableCell align="center" width={200}>{row.ProductName}</TableCell>
             <TableCell align="center">{row.SelectedCategory}</TableCell>
+            <TableCell align="center">{row.CategoryID}</TableCell>
             <TableCell align="center">{row.ProductQuantity}</TableCell>
             <TableCell align="center">{row.ProductPrice}</TableCell>
             <TableCell align="center">{DateFormatConverter(row.Date)}</TableCell>
@@ -171,7 +173,7 @@ export const ProductTable = ({ShowNewProducts,handleProductDeleteSnackbar,Produc
       <TableFooter>
         <TableRow>
           <TablePagination
-            rowsPerPageOptions={[5, ,]}
+            rowsPerPageOptions={[5,]}
             // colSpan={9}
             count={ProductsArray.length}
             rowsPerPage={rowsPerPage}

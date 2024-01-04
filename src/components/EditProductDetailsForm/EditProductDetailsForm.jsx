@@ -12,17 +12,19 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { CustomModal } from "../CustomModal/CustomModal";
-import { AddEditCategory, AddEditProduct, CategoriesStore } from "../../utility/Common";
+import { AddEditCategory, AddEditProduct, CategoriesStore, GetCategoryDetailsByID } from "../../utility/Common";
 import { CategorySelect } from "../CategorySelect/CategorySelect";
 
 // console.log(MyCategory);
 // import CustomSnackbar from "../../Snackbar/Snackbar";
 
-export const EditProductDetailsForm = ({handleEditProductSnackbar,ShowNewProducts,selectedEditProduct,setSelectdCategory,ProductsArray,CategoriesArray,ChangeCategory, handleOpenProductEditForm, handleCloseProductEditForm, open, handleSnackbar  }) => {
+export const EditProductDetailsForm = ({handleEditProductSnackbar,ShowNewProducts,selectedEditProduct,setSelectdCategory,ProductsArray,CategoriesArray, handleOpenProductEditForm, handleCloseProductEditForm, open, handleSnackbar  }) => {
 
 	const [status, setStatus] = React.useState(selectedEditProduct.Status);
+	const [selectedEditCategory,setSelectedEditCategory] = React.useState(selectedEditProduct.CategoryID);
 	const [array, setArray] = React.useState(localStorage.getItem("CategoryData") ? JSON.parse(localStorage.getItem(("CategoryData"))) : []);
 	// console.log(status);
+	console.log(selectedEditCategory);
     
 	const defaultDate = "2022-04-17"
 
@@ -37,6 +39,8 @@ export const EditProductDetailsForm = ({handleEditProductSnackbar,ShowNewProduct
 		ProductName: selectedEditProduct.ProductName,
 		ProductPrice: selectedEditProduct.ProductPrice,
 		ProductQuantity: selectedEditProduct.ProductQuantity,
+		Category: selectedEditCategory,
+		CategoryID:selectedEditProduct.CategoryID,
 		Status: status,
 		Date: defaultDate
 	}
@@ -48,9 +52,17 @@ export const EditProductDetailsForm = ({handleEditProductSnackbar,ShowNewProduct
         
 	})
 
+	const ChangeCategory = (e)=>{
+		let CategoryName = GetCategoryDetailsByID(e.target.value);
+        formik.setFieldValue("Category",CategoryName);
+        setSelectedEditCategory(e.target.value);
+        formik.setFieldValue("CategoryID",e.target.value);
+	}
+
 	const SetLocalStorage = (e) => {
 		console.log(e)
 	}
+
 
 	const SubmitEditedProduct = (e) => {
 		const ID = selectedEditProduct.ID;
@@ -137,7 +149,7 @@ export const EditProductDetailsForm = ({handleEditProductSnackbar,ShowNewProduct
                             <h1 className="w-3/12">Category:</h1>
                             {/* <input className="edit-form-field email-field w-7/12" type="text" name="email" placeholder="Enter your email" value={formik.values.email} onChange={formik.handleChange} /> */}
                             <div className="w-7/12">
-                                <CategorySelect ProductsArray={ProductsArray} selectedEditProduct={selectedEditProduct} setSelectdCategory={setSelectdCategory} CategoriesArray={CategoriesArray} ChangeCategory={ChangeCategory} />
+                                <CategorySelect ProductsArray={ProductsArray} selectedEditCategory={selectedEditCategory} selectedEditProduct={selectedEditProduct} setSelectdCategory={setSelectdCategory} CategoriesArray={CategoriesArray} ChangeCategory={ChangeCategory} />
                             </div>
                         </div>
                     </label>

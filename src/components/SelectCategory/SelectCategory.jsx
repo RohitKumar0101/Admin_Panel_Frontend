@@ -7,28 +7,28 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Categories } from '../../Pages/Categories/Categories';
 
-export const SelectCategoryForProduct = ({selectedCategory,CategoriesArray,SelectedCategoriesArray,setSelectedCategory,ChangeCategory}) => {
+export const SelectCategoryForProduct = ({ selectedCategoryID, CategoriesArray, SelectedCategoriesArray, setSelectedCategory, ChangeCategory }) => {
 
   // const handleChange = (event) => {
   //   setStatus(event.target.value);
   //   setAlert(event.target.value)
   // };
- 
-  
+
+
   return (
     <Box sx={{ maxWidth: "67%", }}>
       <FormControl fullWidth >
         <Select
           labelId="demo-simple-label"
           id="demo-simple"
-          value={selectedCategory}
+          value={selectedCategoryID}
           // label="Age"
-          onChange={ChangeCategory}      
-         
-        >
-            {CategoriesArray && CategoriesArray.map((item)=>{
-                return <MenuItem value={item.CategoryName} key={item.ID}  >{item.CategoryName}</MenuItem>
-            })}
+          onChange={ChangeCategory}>
+          {CategoriesArray && CategoriesArray.map((item) => {
+            if(item.Status){
+              return <MenuItem  value={item.ID} key={item.ID}  >{item.CategoryName}</MenuItem>
+            }
+          })}
 
 
         </Select>

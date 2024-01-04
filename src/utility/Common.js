@@ -93,3 +93,51 @@ export const DeleteAgreedProduct = (data)=>{
    })
    localStorage.setItem("ProductsData",JSON.stringify(NewArray));
 }
+
+export const GetCategoryOptions = ()=>{
+    const array = localStorage.getItem("CategoryData") ? JSON.parse(localStorage.getItem(("CategoryData"))) : [];
+     const CategoryOptions = [];
+   array.forEach(element => {
+           if(element.Status){
+            CategoryOptions.push(element.CategoryName)
+           }
+    });
+    // console.log(FilterdArray);
+
+    // const CategoryOptions = array && array.map((singleArray)=>{
+    //     // if(singleArray.Status){          
+    //     //     console.log(singleArray.CategoryName)
+    //     // }         
+    //                console.log(singleArray.Status)
+    //                if(singleArray.Status)
+    //             return singleArray.CategoryName;
+    //              else{
+
+    //              }
+
+            
+    // })
+    // console.log(CategoryOptions);
+    // console.log(typeof CategoryOptions);
+    return CategoryOptions;
+}
+    
+export const GetCategoryDetailsByID = (ID)=>{
+    console.log(ID);
+    const array = JSON.parse(localStorage.getItem("CategoryData"));
+    const CategoryObjectindex = array.findIndex(item=>item.ID==ID);
+    const CategoryObject = array[CategoryObjectindex];
+   
+    return CategoryObject.CategoryName;
+}
+
+export const CategoryExistInProductTableBoolean = (id)=>{
+    const array = JSON.parse(localStorage.getItem(("ProductsData")));
+    let CategoryBoolean = false;
+    array.forEach(element => {
+        if(element.CategoryID==id){
+            CategoryBoolean = true;
+        }
+    });
+    return CategoryBoolean;
+}

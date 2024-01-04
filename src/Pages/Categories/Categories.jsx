@@ -4,7 +4,7 @@ import { CustomTable } from "../../components/Table/Table"
 import React from "react";
 import { InventoryForm } from "../../components/InventoryForm/InventoryForm";
 import CustomSnackbar from "../../components/Snackbar/Snackbar";
-import { ChangeCategoriesStore, GetCategoriesData } from "../../utility/Common";
+import { CategoryExistInProductTableBoolean, ChangeCategoriesStore, GetCategoriesData } from "../../utility/Common";
 import { EditCategoryForm } from "../../components/EditCategoryForm/EditCategoryForm";
 import {ConfirmDailog} from "../../components/ConfirmationDailog/ConfirmationDailog";
 
@@ -14,6 +14,7 @@ import {ConfirmDailog} from "../../components/ConfirmationDailog/ConfirmationDai
 export const Categories = () => {
     const [open, setOpen] = React.useState(false);
     const [openCategoryCreationSnacker, setOpenCategoryCreationSnacker] = React.useState(false);
+    const [openCancelStatusChangeSnackbar,setOpenCancelStatusSnackbar] = React.useState(false);
     const [CategoriesArray, setCategoriesArray] = React.useState(GetCategoriesData());
     const [openEditCategoryForm, setOpenEditCategoryForm] = React.useState(false);
     const [selectedRowData, setSelectedRowData] = React.useState({});
@@ -21,6 +22,10 @@ export const Categories = () => {
     const [openDeleteConfirm,setOpenDeleteConfirm] = React.useState(false);
     const [DeleteRowData,setDeleteRowData] = React.useState({});
     const [DeleteConfirmSnackbar,setDeleteConfirmSnackbar] = React.useState(false);
+
+    const handleCancelDeleteCategory = ()=>{
+        setOpenCancelStatusSnackbar(prev=>!prev);
+    }
     // let CategoriesArray = GetCategoriesData();
 
     const ChangeStateFromButton = (e) => {
@@ -28,15 +33,20 @@ export const Categories = () => {
         console.log("Change Request Recieved");
         console.log(CategoriesArray);
         console.log(e);
+        const CategoryExistBoolean = CategoryExistInProductTableBoolean(e.target.id);
+        if(CategoryExistBoolean){
+           handleCancelDeleteCategory();
+           setTimeout(() => {
+            handleCancelDeleteCategory();
+           }, 1000);
+           return;
+        }
         let NewArray = CategoriesArray && CategoriesArray.map((row) => {
-            console.log(row.ID);
-            console.log(e.target.id);
             if (row.ID == e.target.id) {
                 return { ...row, Status: !row.Status }
             }
             return row
         })
-        console.log(NewArray);
         // CategoriesArray = NewArray;
         ChangeCategoriesStore(NewArray);
         ShowCategories();
@@ -101,6 +111,7 @@ export const Categories = () => {
             <InventoryForm open={open} setOpen={setOpen} handleOpen={handleOpen} handleCategoriesArray={ShowCategories} handleSnackbar={handleSnackbar} ShowCategories={ShowCategories} />
             {openEditCategoryForm && <EditCategoryForm open={openEditCategoryForm} handleCloseEditCategoryForm={handleCloseEditCategoryForm}  ShowCategories={ShowCategories} selectedRowData={selectedRowData} />}
             <CustomSnackbar open={openCategoryCreationSnacker} message="Category created successfully" />
+            <CustomSnackbar open={openCancelStatusChangeSnackbar} message="Status Change unsuccessful product exist with same category" color="error" />
             <CustomSnackbar open={StatusChangeSnackbar} message="Status Changed Successfully" />
             <CustomSnackbar open={DeleteConfirmSnackbar} message="Category deleted successfully" />
             <ConfirmDailog ShowCategories={ShowCategories} handleDeleteSnackbar={handleDeleteSnackbar} rowData={DeleteRowData} open={openDeleteConfirm} setOpen={setOpenDeleteConfirm} handleDeleteAgreeOpen={handleDeleteAgreeOpen}/>

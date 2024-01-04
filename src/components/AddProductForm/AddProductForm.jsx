@@ -12,7 +12,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { CustomModal } from "../CustomModal/CustomModal";
-import { CategoriesStore, ProductsStore } from "../../utility/Common";
+import { CategoriesStore, GetCategoryDetailsByID, ProductsStore } from "../../utility/Common";
 import { CategorySelect } from "../CategorySelect/CategorySelect";
 import { SelectCategoryForProduct } from "../SelectCategory/SelectCategory";
 
@@ -20,6 +20,7 @@ import { SelectCategoryForProduct } from "../SelectCategory/SelectCategory";
 export const AddProductForm = ({ ShowNewProducts,CategoriesArray, AddProductFormOpen, setAddProductFormOpen,handleAddProductSnackbar }) => {
     const [status,setStatus] = React.useState(1);
     const [selectedCategory, setSelectdCategory] = React.useState("");
+    const [selectedCategoryID,setSelectdCategoryID] = React.useState("");
 
     // const [showErrors,setShowErrors] = React.useState();
     // const localSotrageData = localStorage.getItem("CategoryData") ? localStorage.getItem(JSON.parse("CategoryData")) : [] ;
@@ -37,7 +38,8 @@ export const AddProductForm = ({ ShowNewProducts,CategoriesArray, AddProductForm
         ProductQuantity:null,
         Status: status,
         Date: defaultDate,
-        SelectedCategory: selectedCategory
+        SelectedCategory: selectedCategory,
+        CategoryID:selectedCategoryID
     }
 
     const SignUpSchema = Yup.object().shape({
@@ -58,10 +60,12 @@ export const AddProductForm = ({ ShowNewProducts,CategoriesArray, AddProductForm
     // }
 
     const SubmitCategory = (e) => {
+        console.log(e);
         ProductsStore(e);
         formik.setFieldValue("Status", 1);
         setStatus(1);
         formik.setFieldValue("ProductName", "");
+        formik.setFieldValue("CategoryID", "");
         formik.setTouched(false);
         formik.setFieldValue("SelectedCategory","")
         formik.setFieldValue("ProductPrice", null);
@@ -70,6 +74,7 @@ export const AddProductForm = ({ ShowNewProducts,CategoriesArray, AddProductForm
         handleClose();
         handleAddProductSnackbar();
         setSelectdCategory("");
+        setSelectdCategoryID("");
         setTimeout(() => {
             handleAddProductSnackbar();
         }, 500);
@@ -101,16 +106,23 @@ export const AddProductForm = ({ ShowNewProducts,CategoriesArray, AddProductForm
         formik.setFieldValue("ProductName", "");
         formik.setFieldValue("ProductPrice", null);
         formik.setFieldValue("ProductQuantity",null);
+        formik.setFieldValue("SelectedCategory","");
+        formik.setFieldValue("CategoryID","");
         formik.setTouched(false);
         setSelectdCategory(""); 
+        setSelectdCategoryID("")
         handleClose();
         // formik.setFieldValue("Status",");
         setStatus(1);
     }
 
     const ChangeCategory = (e)=>{
-        formik.setFieldValue("SelectedCategory",e.target.value);
-        setSelectdCategory(e.target.value)
+        console.log(e);
+        let CategoryName = GetCategoryDetailsByID(e.target.value);
+        formik.setFieldValue("SelectedCategory",CategoryName);
+        formik.setFieldValue("CategoryID",e.target.value);
+        setSelectdCategory(CategoryName);
+        setSelectdCategoryID(e.target.value);
       }
 
     const height = 585;
@@ -143,7 +155,7 @@ export const AddProductForm = ({ ShowNewProducts,CategoriesArray, AddProductForm
                             {/* <input className="edit-form-field email-field w-7/12" type="text" name="email" placeholder="Enter your email" value={formik.values.email} onChange={formik.handleChange} /> */}
                             <div className="w-7/12">
                                 {/* <CategorySelect selectedCategory={selectedCategory} setSelectdCategory={setSelectdCategory} CategoriesArray={CategoriesArray} ChangeCategory={ChangeCategory} /> */}
-                                 <SelectCategoryForProduct selectedCategory={selectedCategory} CategoriesArray={CategoriesArray} ChangeCategory={ChangeCategory} />
+                                 <SelectCategoryForProduct selectedCategoryID={selectedCategoryID} CategoriesArray={CategoriesArray} ChangeCategory={ChangeCategory} />
                             </div>
                         </div>
                     </label>
