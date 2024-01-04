@@ -12,12 +12,12 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { CustomModal } from "../CustomModal/CustomModal";
-import { CategoriesStore } from "../../utility/utility";
+import { CategoriesStore } from "../../utility/Common";
  
 // console.log(MyCategory);
 // import CustomSnackbar from "../../Snackbar/Snackbar";
 
-export const InventoryForm = ({ handleOpen, setOpen, open, handleSnackbar,handleCategoriesArray}) => {
+export const InventoryForm = ({  setOpen, open, handleSnackbar,handleCategoriesArray}) => {
 
 	const [status, setStatus] = React.useState(1);
 	// const [showErrors,setShowErrors] = React.useState();
@@ -31,7 +31,6 @@ export const InventoryForm = ({ handleOpen, setOpen, open, handleSnackbar,handle
 			}
 	
 
-
 	const navigate = useNavigate();
 	const initialValues = {
 		CategoryName:"",
@@ -40,7 +39,7 @@ export const InventoryForm = ({ handleOpen, setOpen, open, handleSnackbar,handle
 	}
 
 	const SignUpSchema = Yup.object().shape({
-		CategoryName: Yup.string().required("It is a required field").min(5,"Minimum of 5 characters")
+		CategoryName: Yup.string().required("It is a required field").min(5,"Minimum of 5 characters").max(20,"Maximum of 20 characters")
 	})
 
 	const SetLocalStorage  = (e)=>{
@@ -54,12 +53,13 @@ export const InventoryForm = ({ handleOpen, setOpen, open, handleSnackbar,handle
 	// }
 
 	const SubmitCategory = (e) => {
-		console.log(e);
-		CategoriesStore(e,array,ChangeStorageArray);
+	    
+		CategoriesStore(e);
 		// handleSetCategory(e)
-		handleCategoriesArray(e);
+		handleCategoriesArray();
 		 console.log(array);
 		formik.setFieldValue("Status",1);
+		setStatus(1);
 		formik.setFieldValue("CategoryName","");
 		formik.setTouched(false);
 		
@@ -99,11 +99,11 @@ export const InventoryForm = ({ handleOpen, setOpen, open, handleSnackbar,handle
 		setStatus(1);
 	}
     
-	
+	const height= 450;
 
 
-	return <CustomModal handleOpen={handleOpen} handleClose={handleClose} open={open}>
-		<div className="flex flex-col h-full w-full ">
+	return <CustomModal height={height}  open={open}>
+		<div className="flex flex-col h-full w-full mt-3">
 			<label className="user-details-text" style={{ color: "black" }}>Add Category Details:</label>
 			<div className="flex justify-center">
 
@@ -155,7 +155,7 @@ export const InventoryForm = ({ handleOpen, setOpen, open, handleSnackbar,handle
 
 
 					{/* {passErr ? <label className="password-err">Password and Confirm-Password does not match</label> : <></>} */}
-					<div className="flex w-3/4 justify-center gap-20  ">
+					<div className="flex w-3/4 justify-center gap-5  ">
 						<button type="submit" className="Submit-edit-details-button mt-4" >Submit</button>
 
 						<button className="Cancel-edit-details-button  mt-4" onClick={CancelCategoryForm}>Cancel</button>

@@ -7,32 +7,29 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Categories } from '../../Pages/Categories/Categories';
 
-export const CustomSelect = ({ CategoriesArray, status, ChangeStatus }) => {
+export const SelectCategoryForProduct = ({selectedCategory,CategoriesArray,SelectedCategoriesArray,setSelectedCategory,ChangeCategory}) => {
 
   // const handleChange = (event) => {
   //   setStatus(event.target.value);
   //   setAlert(event.target.value)
   // };
-  if (typeof status === Boolean) {
-
-  }
-
+ 
+  
   return (
     <Box sx={{ maxWidth: "67%", }}>
-      <FormControl fullWidth>
-        {/* <InputLabel id="test-select-label">Status</InputLabel> */}
+      <FormControl fullWidth >
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={typeof status ? Number(status) : status}
+          labelId="demo-simple-label"
+          id="demo-simple"
+          value={selectedCategory}
           // label="Age"
-          onChange={ChangeStatus}
+          onChange={ChangeCategory}      
+         
         >
-              <MenuItem value={1} selected>Active</MenuItem>
-              <MenuItem value={0} >Inacitve</MenuItem>
-            
+            {CategoriesArray && CategoriesArray.map((item)=>{
+                return <MenuItem value={item.CategoryName} key={item.ID}  >{item.CategoryName}</MenuItem>
+            })}
 
-          
 
         </Select>
       </FormControl>

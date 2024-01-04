@@ -1,0 +1,22 @@
+.MuiTableRow-root
+{
+    /* vertical-align:top !important; */
+    height: 60px !important;
+    max-height: 60px !important;
+    /* background-color: black; */
+}
+
+.MuiTableRow-footer
+{
+    /* height: 200px !important; */
+}
+
+.MuiTableRow-head
+{
+    background-color: rgb(172, 172, 255);
+}
+
+.MuiTableBody-root
+{
+    /* background-color: red; */
+}

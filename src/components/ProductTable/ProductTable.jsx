@@ -18,11 +18,11 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import "./Table.css";
 import { Categories } from '../../Pages/Categories/Categories';
 import { alignProperty } from '@mui/material/styles/cssUtils';
+import {ConfirmDailog} from '../ConfirmationDailog/ConfirmationDailog';
 
-function TablePaginationActions(props) {
+const TablePaginationActions = (props)=> {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
@@ -84,13 +84,15 @@ TablePaginationActions.propTypes = {
 };
 
 
-export const CustomTable = ({ CategoriesArray, ChangeStateFromButton, handleDeleteAgreeOpen, handleOpenEditCategoryForm, handleStatusChangeSnackbar}) => {
+export const ProductTable = ({ShowNewProducts,handleProductDeleteSnackbar,ProductsArray,handleOpenProductEditForm,ChangeStatusFromButton, handleDeleteAgreeOpen, handleOpenEditCategoryForm, handleStatusChangeSnackbar}) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+  const [selectedRowForDelete,setSelectedRowForDelete] = React.useState({});
+  const [openProductDeleteDailog,setOpenProductDeleteDailog] = React.useState(false);
+  const ProductDeleteBoolean = true;
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - CategoriesArray.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - ProductsArray.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -101,51 +103,68 @@ export const CustomTable = ({ CategoriesArray, ChangeStateFromButton, handleDele
     setPage(0);
   };
 
+  const handleOpenProductDeleteDailog = (row)=>{
+       setSelectedRowForDelete(row);
+        setOpenProductDeleteDailog(true);
+
+  }
+
+  const handleCloseProductDeleteDailog = ()=>{
+    setOpenProductDeleteDailog(false);
+    selectedRowForDelete({});
+  }
+
 
 
   return (<TableContainer component={Paper}>
-    <Table sx={{ minWidth: 650,minHeight:"100%" }} aria-label="simple table" >
+    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
       <TableHead style={{ fontWeight: "bold" }}>
         <TableRow>
           <TableCell align='center' style={{ fontWeight: "bolder" }}>id</TableCell>
+          <TableCell align="center" style={{ fontWeight: "bolder" }}>Product Name</TableCell>
           <TableCell align="center" style={{ fontWeight: "bolder" }}>Category Name</TableCell>
+          <TableCell align="center" style={{ fontWeight: "bolder" }}>Quantity</TableCell>
+          <TableCell align="center" style={{ fontWeight: "bolder" }}>PerUnit Price</TableCell>
           <TableCell align="center" style={{ fontWeight: "bolder" }}>Created Date</TableCell>
           <TableCell align="center" style={{ fontWeight: "bolder" }}>Status</TableCell>
           <TableCell align="center" style={{ fontWeight: "bolder" }}>Action</TableCell>
         </TableRow>
       </TableHead>
       <TableBody >
-        {((rowsPerPage>0 && CategoriesArray) ? CategoriesArray.slice(page*rowsPerPage,page*rowsPerPage + rowsPerPage):CategoriesArray).map((row, key) => (
+        {((rowsPerPage>0 && ProductsArray) ? ProductsArray.slice(page*rowsPerPage,page*rowsPerPage + rowsPerPage):ProductsArray).map((row, key) => (
           <TableRow
             key={row.CategoryName}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            style={{verticalAlign:"top !important"}}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }} 
+            
           >
             <TableCell align='center' component="th" scope="row">
               {row.ID}
             </TableCell>
-            <TableCell align="center">{row.CategoryName}</TableCell>
+            <TableCell align="center" width={200}>{row.ProductName}</TableCell>
+            <TableCell align="center">{row.SelectedCategory}</TableCell>
+            <TableCell align="center">{row.ProductQuantity}</TableCell>
+            <TableCell align="center">{row.ProductPrice}</TableCell>
             <TableCell align="center">{DateFormatConverter(row.Date)}</TableCell>
             {row.Status ?
 
               <TableCell align="center">
                 <Tooltip title="Click here to change the Status" arrow>
-                  <div className='flex justify-center'><h1 className='text-white bg-green-400 w-20 rounded font-semibold hover:bg-green-500 cursor-pointer' id={row.ID} onClick={ChangeStateFromButton}>Active</h1>
+                  <div className='flex justify-center'><h1 className='text-white bg-green-400 w-20 rounded font-semibold hover:bg-green-500 cursor-pointer' id={row.ID} onClick={ChangeStatusFromButton}>Active</h1>
                   </div>
                 </Tooltip>
               </TableCell> :
               <TableCell align="center">
                 <Tooltip title="Click here to change the Status" arrow>
-                  <div className='flex justify-center'><h1 onClick={ChangeStateFromButton} id={row.ID} className='text-white bg-orange-400 hover:bg-orange-500 cursor-pointer w-20 rounded font-semibold'>Inactive</h1>
+                  <div className='flex justify-center'><h1 onClick={ChangeStatusFromButton} id={row.ID} className='text-white bg-orange-400 hover:bg-orange-500 cursor-pointer w-20 rounded font-semibold'>Inactive</h1>
                   </div>
                 </Tooltip>
               </TableCell>}
-            <TableCell align="center"><div className='flex gap-2 justify-center'><Button style={{ backgroundColor: "lightgray", color: "black", width: "5px" }} onClick={() => handleOpenEditCategoryForm(row)}><EditIcon /></Button > <Button onClick={() => handleDeleteAgreeOpen(row)} style={{ backgroundColor: "lightgray", color: "black", width: "5px" }}><DeleteIcon /></Button></div></TableCell>
+            <TableCell align="center"><div className='flex gap-2 justify-center'><Button style={{ backgroundColor: "lightgray", color: "black", width: "5px" }} onClick={() => handleOpenProductEditForm(row)}><EditIcon /></Button > <Button onClick={() => handleOpenProductDeleteDailog(row)} style={{ backgroundColor: "lightgray", color: "black", width: "5px" }}><DeleteIcon /></Button></div></TableCell>
           </TableRow>
         ))}
         {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows}}>
-              <TableCell  colSpan={5} />
+              <TableCell  colSpan={8} />
             </TableRow>
           )}
       </TableBody>
@@ -153,8 +172,8 @@ export const CustomTable = ({ CategoriesArray, ChangeStateFromButton, handleDele
         <TableRow>
           <TablePagination
             rowsPerPageOptions={[5, ,]}
-            colSpan={5}
-            count={CategoriesArray.length}
+            // colSpan={9}
+            count={ProductsArray.length}
             rowsPerPage={rowsPerPage}
             page={page}
             SelectProps={{
@@ -166,11 +185,11 @@ export const CustomTable = ({ CategoriesArray, ChangeStateFromButton, handleDele
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
             ActionsComponent={TablePaginationActions}
-            
-            
+            // align"
           />
         </TableRow>
       </TableFooter>
     </Table>
+    <ConfirmDailog ProductDeleteBoolean={ProductDeleteBoolean}  handleProductDeleteSnackbar={handleProductDeleteSnackbar} open={openProductDeleteDailog} ShowNewProducts={ShowNewProducts} ProductRowForDelete={selectedRowForDelete} setOpen={setOpenProductDeleteDailog} />
   </TableContainer>);
 }

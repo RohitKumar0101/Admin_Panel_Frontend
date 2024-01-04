@@ -4,8 +4,9 @@ import { CustomTable } from "../../components/Table/Table"
 import React from "react";
 import { InventoryForm } from "../../components/InventoryForm/InventoryForm";
 import CustomSnackbar from "../../components/Snackbar/Snackbar";
-import { ChangeCategoriesStore, GetCategoriesData } from "../../utility/utility";
+import { ChangeCategoriesStore, GetCategoriesData } from "../../utility/Common";
 import { EditCategoryForm } from "../../components/EditCategoryForm/EditCategoryForm";
+import {ConfirmDailog} from "../../components/ConfirmationDailog/ConfirmationDailog";
 
 
 
@@ -14,55 +15,95 @@ export const Categories = () => {
     const [open, setOpen] = React.useState(false);
     const [openCategoryCreationSnacker, setOpenCategoryCreationSnacker] = React.useState(false);
     const [CategoriesArray, setCategoriesArray] = React.useState(GetCategoriesData());
-    const [openEditCategoryForm,setOpenEditCategoryForm] = React.useState(false);
+    const [openEditCategoryForm, setOpenEditCategoryForm] = React.useState(false);
+    const [selectedRowData, setSelectedRowData] = React.useState({});
+    const [StatusChangeSnackbar,setStatusChangeSnackbar] = React.useState(false);
+    const [openDeleteConfirm,setOpenDeleteConfirm] = React.useState(false);
+    const [DeleteRowData,setDeleteRowData] = React.useState({});
+    const [DeleteConfirmSnackbar,setDeleteConfirmSnackbar] = React.useState(false);
     // let CategoriesArray = GetCategoriesData();
 
     const ChangeStateFromButton = (e) => {
+        
         console.log("Change Request Recieved");
         console.log(CategoriesArray);
-        console.log(e.target.id);
+        console.log(e);
         let NewArray = CategoriesArray && CategoriesArray.map((row) => {
-            if (row.CategoryName === e.target.id) {
+            console.log(row.ID);
+            console.log(e.target.id);
+            if (row.ID == e.target.id) {
                 return { ...row, Status: !row.Status }
             }
             return row
         })
+        console.log(NewArray);
         // CategoriesArray = NewArray;
-        setCategoriesArray(NewArray);
         ChangeCategoriesStore(NewArray);
+        ShowCategories();
+        handleStatusChangeSnackbar();
+        setTimeout(() => {
+            handleStatusChangeSnackbar();
+        }, 1000);
 
     }
 
+    const ShowCategories = ()=>{
+        setCategoriesArray(JSON.parse(localStorage.getItem("CategoryData")));
+    }
 
-    const handleOpenEditCategoryForm = ()=>setOpenEditCategoryForm(true);
-    const handleCloseEditCategoryForm = ()=>setOpenEditCategoryForm(false);
+    const handleStatusChangeSnackbar = ()=>{
+        setStatusChangeSnackbar((prev)=>!prev)
+    }
 
+
+    const handleOpenEditCategoryForm = (row) => {
+        setOpenEditCategoryForm(true);
+        setSelectedRowData(row);
+        console.log(row);
+    }
+    const handleCloseEditCategoryForm = () => {
+        setOpenEditCategoryForm(false);
+        setSelectedRowData({});
+    }
     const handleOpen = () => setOpen(true);
-    
+
     const handleSnackbar = () => {
         setOpenCategoryCreationSnacker((prev) => !prev);
-    }
+    }   
+
+    const handleDeleteAgreeOpen = (row) => {
+        setOpenDeleteConfirm(true);
+        setDeleteRowData(row);
+      };
+
+      const handleDeleteSnackbar = ()=>{
+        setDeleteConfirmSnackbar(prev=>!prev);
+      }
+    
 
 
-    const handleCategoriesArray = (data)=>{
-      setCategoriesArray(prev=>[...prev,data]);
+    const handleCategoriesArray = (data) => {
+        setCategoriesArray(prev => [...prev, data]);
     }
 
 
     return <Layout>
-        <div className="mt-12 w-11/12 ml-8">
+        <div className="mt-8 w-11/12 ml-8">
             <div className="flex w-full justify-end mb-6">
                 <Button style={{ backgroundColor: "blue", color: "white", opacity: "65%" }} onClick={handleOpen}>Add Category</Button>
             </div>
             <div className="bg-white p-2">
                 <h3 className="text-lg font-medium w-2/6 flex justify-start mb-2 opacity-90">Manage Categories</h3>
                 <div>
-                    <CustomTable CategoriesArray={CategoriesArray} ChangeStateFromButton={ChangeStateFromButton}  handleOpenEditCategoryForm={handleOpenEditCategoryForm} />
+                    <CustomTable CategoriesArray={CategoriesArray} handleDeleteAgreeOpen={handleDeleteAgreeOpen} ChangeStateFromButton={ChangeStateFromButton} handleStatusChangeSnackbar={handleStatusChangeSnackbar}  ShowCategories={ShowCategories} handleOpenEditCategoryForm={handleOpenEditCategoryForm} />
                 </div>
             </div>
-            <InventoryForm open={open} setOpen={setOpen} handleOpen={handleOpen} handleCategoriesArray={handleCategoriesArray}  handleSnackbar={handleSnackbar} />
-            <EditCategoryForm open={openEditCategoryForm} handleCloseEditCategoryForm={handleCloseEditCategoryForm}  />
+            <InventoryForm open={open} setOpen={setOpen} handleOpen={handleOpen} handleCategoriesArray={ShowCategories} handleSnackbar={handleSnackbar} ShowCategories={ShowCategories} />
+            {openEditCategoryForm && <EditCategoryForm open={openEditCategoryForm} handleCloseEditCategoryForm={handleCloseEditCategoryForm}  ShowCategories={ShowCategories} selectedRowData={selectedRowData} />}
             <CustomSnackbar open={openCategoryCreationSnacker} message="Category created successfully" />
+            <CustomSnackbar open={StatusChangeSnackbar} message="Status Changed Successfully" />
+            <CustomSnackbar open={DeleteConfirmSnackbar} message="Category deleted successfully" />
+            <ConfirmDailog ShowCategories={ShowCategories} handleDeleteSnackbar={handleDeleteSnackbar} rowData={DeleteRowData} open={openDeleteConfirm} setOpen={setOpenDeleteConfirm} handleDeleteAgreeOpen={handleDeleteAgreeOpen}/>
         </div>
     </Layout>
 }

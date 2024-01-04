@@ -1,0 +1,120 @@
+.product-details-text{
+    font-size: xx-large;
+        font-weight: bold;
+        opacity: 80%;
+        display: flex;
+        justify-content: start;
+        margin-left: 9rem;
+        margin-bottom:1rem;
+        margin-top: .5rem;
+}
+
+.edit-inventory-field {
+    height: 3.2rem;
+    border-radius: .2rem;
+    font-weight:400;
+    font-size:medium;
+    padding-left: 8px;
+}
+
+
+
+.edit-inventory-field::placeholder{
+    /* color: rgb(52, 30, 215); */
+    /* border: 5px solid blue; */
+    font-weight:normal;
+    
+    opacity: 80%;
+}
+
+
+.edit-Inventory-details{ 
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items:center;
+        /* margin-left: 2rem; */
+}
+
+.form-field:focus {
+    outline:auto;
+}
+
+.edit-table-details-label {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    font-size: small;
+    width: 100%;
+    
+    /* height:; */
+
+   
+}
+
+.edit-table-field-error{
+    font-size: x-small;
+    color: red;
+    width: 100% ;
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.error-spacing{
+    margin-bottom: 15px;
+}
+
+.edit-table-password-error{
+    display: flex;
+    justify-content: flex-end;
+   
+   width: 100%;
+    font-size:x-small;
+    color: red;
+    
+}
+
+.Submit-edit-details-button{
+    height: 2.5rem;
+    width: 25%;
+    border-radius: 2rem;
+    /* border: 1px; */
+    background-color:green;
+    border-color: whitesmoke;
+    color: white;
+    cursor: pointer;
+    font-weight: normal;
+    opacity: 85%;
+}
+
+.Cancel-edit-details-button{
+    height: 2.5rem;
+    width: 25%;
+    border-radius: 2rem;
+    /* border: 1px; */
+    background-color:red;
+    border-color: whitesmoke;
+    color: white;
+    cursor: pointer;
+    font-weight: normal;
+    opacity: 85%;
+}
+
+.Submit-edit-details-button:hover{
+ opacity: 100%;
+}
+
+.Cancel-edit-details-button:hover{
+ opacity: 100%;
+}
+
+
+.edit-user-details{
+    font-size: medium;
+    font-weight: 600;
+    font-family:Arial, Helvetica, sans-serif;
+    
+}

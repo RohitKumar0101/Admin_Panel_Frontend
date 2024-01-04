@@ -10,6 +10,7 @@ import React from 'react';
 import { Listing } from './Pages/ListingPage/Listing';
 import { BlockPage } from './Pages/BlockPage/BlockPage';
 import { Categories } from './Pages/Categories/Categories';
+import { Products } from './Pages/ProductPage/Products';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           {/* <Route path='/layout' element={<Layout file={file}/>} /> */}
           <Route path='/profile' element={<Profile file={file} setFile={setFile} open={open} handleSnacker={handleSnacker}/>} />
           <Route path='/listing' element={<Listing file={file}/>} />
+          <Route path='/products' element={<Products file={file}/>} />
           <Route path='/block' element={<BlockPage file={file}/>} />
           <Route path='/categories' element={<Categories file={file}/>} />
         </Routes>

@@ -8,24 +8,21 @@ import { Tooltip } from '@mui/material';
 
 
 const columns = [
-    { field: 'id', headerName: 'ID', headerClassName: 'table-header', cellClassName: "!justify-center",headerAlign: 'center' },
+    { field: 'ID', headerName: 'ID', headerClassName: 'table-header', cellClassName: "!justify-center",headerAlign: 'center' },
+    { field: 'ProductName', headerName: 'Product Name', headerClassName: 'table-header', flex: 1, cellClassName: "!justify-center", headerAlign: 'center' },
+    { field: 'SelectedCategory', headerName: 'Category Name', headerClassName: 'table-header', flex: 1, cellClassName: "!justify-center", headerAlign: 'center' },
     {
-        field: 'fullName',
-        headerName: 'Full name',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
+        field: 'ProductQuantity',
+        headerName: 'Product Quantity',
+        type: 'number',
         flex: 1,
-        headerClassName: 'table-header-fullName',
+        headerClassName: 'table-header',
         headerAlign: 'center',
-        cellClassName: "!justify-center",
-        valueGetter: (params) =>
-            `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+        cellClassName: "!justify-center"
     },
-    { field: 'firstName', headerName: 'First name', headerClassName: 'table-header', flex: 1, cellClassName: "!justify-center", headerAlign: 'center' },
-    { field: 'lastName', headerName: 'Last name', headerClassName: 'table-header', flex: 1, cellClassName: "!justify-center", headerAlign: 'center' },
     {
-        field: 'age',
-        headerName: 'Age',
+        field: 'ProductPrice',
+        headerName: 'Product Price',
         type: 'number',
         flex: 1,
         headerClassName: 'table-header',
@@ -36,7 +33,7 @@ const columns = [
 ];
 
 
-const OrignalRows = [
+const OrignalArray = [
     { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
     { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
     { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
@@ -66,45 +63,49 @@ const OrignalRows = [
     { id: 27, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
-//@info : This function is for generate json to csv file 
-const generateCsv = (rows, columns) => {
-    const csvContent =
-        columns.map((column) => column.headerName).join(',') +
-        '\n' +
-        rows.map((row) => columns.map((column) => row[column.field]).join(',')).join('\n');
+ 
 
-    return new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
-}
-
-const CustomToolbar = () => {
-    const handleExportClick = () => {
-
-        const blob = generateCsv(OrignalRows, columns);
-        saveAs(blob, 'exported_data.csv');
-    };
-    return (
-        <Tooltip title="Download file as CSV">
-            <button onClick={handleExportClick} style={{ height: "100%", width: "100%", marginLeft: 'auto', backgroundColor: "darkgray", borderRadius: "5px", fontSize: "smaller", padding: "5px", color: "whitesmoke" }}>
-                Export CSV
-            </button>
-        </Tooltip>
-    );
-}
 
 
 export default function ListingTable() {
-    const [rows, setRows] = React.useState(OrignalRows);
+    const [ProductsArray, setProductsArray] = React.useState(localStorage.getItem("ProductsData") ? JSON.parse(localStorage.getItem(("ProductsData"))) : []);
+    const [rows, setRows] = React.useState(ProductsArray);
     const [searched, setSearched] = React.useState("");
+    
+    //@info : This function is for generate json to csv file 
+    const generateCsv = (rows, columns) => {
+        const csvContent =
+            columns.map((column) => column.headerName).join(',') +
+            '\n' +
+            rows.map((row) => columns.map((column) => row[column.field]).join(',')).join('\n');
+    
+        return new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+    }
+    
+    const CustomToolbar = () => {
+        const handleExportClick = () => {
+    
+            const blob = generateCsv(ProductsArray, columns);
+            saveAs(blob, 'exported_data.csv');
+        };
+        return (
+            <Tooltip title="Download file as CSV">
+                <button onClick={handleExportClick} style={{ height: "100%", width: "100%", marginLeft: 'auto', backgroundColor: "darkgray", borderRadius: "5px", fontSize: "smaller", padding: "5px", color: "whitesmoke" }}>
+                    Export CSV
+                </button>
+            </Tooltip>
+        );
+    }
 
 
     const requestSearch = (e) => {
         const searchedVal = e.target.value.trimStart();
         if (searchedVal.length < 1) {
-            setRows(OrignalRows);
+            setRows(OrignalArray);
             setSearched("");
         }
         setSearched(searchedVal)
-        const filteredRows = OrignalRows.filter((row) => {
+        const filteredRows = OrignalArray.filter((row) => {
             return (row.firstName.toLowerCase().includes(searchedVal.toLowerCase()) || row.lastName.toLowerCase().includes(searchedVal.toLowerCase()));
         });
         setRows(filteredRows);
@@ -126,6 +127,7 @@ export default function ListingTable() {
             <div style={{ height: "100%", width: "100%" }}>
                 <DataGrid
                     rows={rows}
+                    getRowId={(row) => row.ID}
                     columns={columns}
                     initialState={{
                         pagination: {
@@ -134,7 +136,7 @@ export default function ListingTable() {
                     }
                     }
                     options={{
-                        exportButton: true,
+                        exportButton:true,
                         exportAllData: true
                     }}
                     pageSizeOptions={[5, 10]}
