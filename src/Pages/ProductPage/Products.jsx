@@ -45,6 +45,10 @@ export const Products = ({ file }) => {
         setProductsArray(JSON.parse(localStorage.getItem("ProductsData")));
     }
 
+    const handleSort = (data) => {
+        setProductsArray(data)
+    }
+
     const ChangeStatusFromButton = (e) => {
 
         console.log("Change Request Recieved");
@@ -135,20 +139,22 @@ export const Products = ({ file }) => {
     }
 
     return <Layout file={file}>
-        <div className="mt-3 w-11/12 ml-8">
+        <div className="mt-2 w-11/12 ml-8">
             <div className="flex w-full justify-end mb-2">
                 <Button style={{ backgroundColor: "blue", color: "white", opacity: "65%" }} onClick={handleOpen}>Add Product</Button>
             </div>
             <div className="bg-white p-1 w-full">
-                <h3 className="text-lg font-medium w-2/6 flex justify-start opacity-90 mb-2">Manage Products</h3>
+                <h3 className="text-lg font-medium w-2/6 flex justify-start opacity-90 ">Manage Products</h3>
                 <div className="flex flex-col gap-1">
+                    <div className="w-11/12 flex justify-end ml-14">
                     <FilterItems options={options} handleFilterOnCategory={handleFilterOnCategory} />
-                    <ProductTable handleProductDeleteSnackbar={handleProductDeleteSnackbar} ShowNewProducts={ShowNewProducts} handleOpenProductEditForm={handleOpenProductEditForm} handleCloseProductEditForm={handleCloseProductEditForm} ProductsArray={ProductsArray} ChangeStatusFromButton={ChangeStatusFromButton} openEditProductDetailsForm={openEditProductDetailsForm} />
+                    </div>
+                    <ProductTable handleSort={handleSort} handleProductDeleteSnackbar={handleProductDeleteSnackbar} ShowNewProducts={ShowNewProducts} handleOpenProductEditForm={handleOpenProductEditForm} handleCloseProductEditForm={handleCloseProductEditForm} ProductsArray={ProductsArray} ChangeStatusFromButton={ChangeStatusFromButton} openEditProductDetailsForm={openEditProductDetailsForm} />
                     {/* <CustomTable CategoriesArray={CategoriesArray} handleDeleteAgreeOpen={handleDeleteAgreeOpen} ChangeStateFromButton={ChangeStateFromButton} handleStatusChangeSnackbar={handleStatusChangeSnackbar} ShowCategories={ShowCategories} handleOpenEditCategoryForm={handleOpenEditCategoryForm} /> */}
                 </div>
             </div>
             <AddProductForm CategoriesArray={CategoriesArray} AddProductFormOpen={AddProductFormOpen} ShowNewProducts={ShowNewProducts} handleAddProductSnackbar={handleAddProductSnackbar} setAddProductFormOpen={setAddProductFormOpen} />
-            {openEditProductDetailsForm && <EditProductDetailsForm handleEditProductSnackbar={handleEditProductSnackbar} ShowNewProducts={ShowNewProducts} CategoriesArray={CategoriesArray} open={openEditProductDetailsForm} ProductsArray={ProductsArray} selectedEditProduct={selectedEditProduct} handleCloseProductEditForm={handleCloseProductEditForm}  />}
+            {openEditProductDetailsForm && <EditProductDetailsForm handleEditProductSnackbar={handleEditProductSnackbar} ShowNewProducts={ShowNewProducts} CategoriesArray={CategoriesArray} open={openEditProductDetailsForm} ProductsArray={ProductsArray} selectedEditProduct={selectedEditProduct} handleCloseProductEditForm={handleCloseProductEditForm} />}
             <CustomSnackbar open={openAddProductSnackbar} message="Product Created successfully" />
             <CustomSnackbar open={openEditProductSnackbar} message="Product Edited successfully" />
             <CustomSnackbar open={StatusChangeSnackbar} message="Status Changed Successfully" />

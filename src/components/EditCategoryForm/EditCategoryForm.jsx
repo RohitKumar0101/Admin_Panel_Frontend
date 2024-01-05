@@ -15,12 +15,12 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { CustomModal } from "../CustomModal/CustomModal";
-import { AddEditCategory, CategoriesStore } from "../../utility/Common";
+import { AddEditCategory, CategoriesStore, CategoryExistInProductTableBoolean } from "../../utility/Common";
 
 // console.log(MyCategory);
 // import CustomSnackbar from "../../Snackbar/Snackbar";
 
-export const EditCategoryForm = ({ handleOpen, setOpen, open, handleSnackbar, handleEditCategoryForm, handleCloseEditCategoryForm, selectedRowData, ShowCategories }) => {
+export const EditCategoryForm = ({ handleRestictEditCategory,handleOpen, setOpen, open,handleEditCategorySnackbar, handleSnackbar, handleEditCategoryForm, handleCloseEditCategoryForm, selectedRowData, ShowCategories }) => {
 
 	const [status, setStatus] = React.useState(selectedRowData.Status);
 	const [array, setArray] = React.useState(localStorage.getItem("CategoryData") ? JSON.parse(localStorage.getItem(("CategoryData"))) : []);
@@ -53,6 +53,15 @@ export const EditCategoryForm = ({ handleOpen, setOpen, open, handleSnackbar, ha
 		const ID = selectedRowData.ID;
 		const ObjWithID = { ...e, ID: selectedRowData.ID };
 		// CategoriesStore(e,array,ChangeStorageArray);
+		let CategoryBoolean = CategoryExistInProductTableBoolean(selectedRowData.ID);
+		if(CategoryBoolean){
+			handleRestictEditCategory();
+			setTimeout(() => {
+				handleRestictEditCategory();
+			}, 1000);
+			handleCloseEditCategoryForm();
+			return;
+		}
 		AddEditCategory(ObjWithID);
 		ShowCategories();
 		handleCloseEditCategoryForm();
@@ -61,9 +70,9 @@ export const EditCategoryForm = ({ handleOpen, setOpen, open, handleSnackbar, ha
 		// formik.setTouched(false);
 		// SetLocalStorage(e);
 		// handleClose();
-		handleSnackbar();
+		handleEditCategorySnackbar();
 		setTimeout(() => {
-			handleSnackbar();
+			handleEditCategorySnackbar();
 		}, 1000);
 	}
 

@@ -7,12 +7,12 @@ import { date } from 'yup';
 // }
 
 
-export const ProductsStore = (data)=>{
-const array = localStorage.getItem("ProductsData") ? JSON.parse(localStorage.getItem(("ProductsData"))) : [];
-const ID = Date.now();
-const ProductObjectWithId = {...data,ID};
-array.unshift(ProductObjectWithId);
-localStorage.setItem("ProductsData",JSON.stringify(array)); 
+export const ProductsStore = (data) => {
+    const array = localStorage.getItem("ProductsData") ? JSON.parse(localStorage.getItem(("ProductsData"))) : [];
+    const ID = Date.now();
+    const ProductObjectWithId = { ...data, ID };
+    array.unshift(ProductObjectWithId);
+    localStorage.setItem("ProductsData", JSON.stringify(array));
 }
 
 
@@ -53,9 +53,9 @@ export const ChangeProductsData = (data) => {
 
 export const AddEditCategory = (data) => {
     // console.log(OldId);
-    
+
     const array = localStorage.getItem("CategoryData") ? JSON.parse(localStorage.getItem(("CategoryData"))) : []
-   
+
     const indexToUpdate = array.findIndex(item => item.ID === data.ID);
     // console.log(indexToUpdate);
     array[indexToUpdate] = data;
@@ -63,9 +63,9 @@ export const AddEditCategory = (data) => {
     // console.log(array);
 }
 
-export const AddEditProduct = (data) =>{
+export const AddEditProduct = (data) => {
     const array = JSON.parse(localStorage.getItem(("ProductsData")));
-   
+
     const indexToUpdate = array.findIndex(item => item.ID === data.ID);
     // console.log(indexToUpdate);
     array[indexToUpdate] = data;
@@ -73,34 +73,34 @@ export const AddEditProduct = (data) =>{
 }
 
 export const DateFormatConverter = (data) => {
-    
+
     let ConvertedDate = moment(data, "YYYY-MM-DD").format("LL");
     return (ConvertedDate)
 }
 
-export const DeleteAgreedRow =(data)=>{
+export const DeleteAgreedRow = (data) => {
     const array = JSON.parse(localStorage.getItem("CategoryData"));
-   const NewArray =  array.filter((item)=>{
-         return item.ID !== data.ID
-   })
-   localStorage.setItem("CategoryData",JSON.stringify(NewArray));
+    const NewArray = array.filter((item) => {
+        return item.ID !== data.ID
+    })
+    localStorage.setItem("CategoryData", JSON.stringify(NewArray));
 }
 
-export const DeleteAgreedProduct = (data)=>{
+export const DeleteAgreedProduct = (data) => {
     const array = JSON.parse(localStorage.getItem("ProductsData"));
-   const NewArray =  array.filter((item)=>{
-         return item.ID !== data.ID
-   })
-   localStorage.setItem("ProductsData",JSON.stringify(NewArray));
+    const NewArray = array.filter((item) => {
+        return item.ID !== data.ID
+    })
+    localStorage.setItem("ProductsData", JSON.stringify(NewArray));
 }
 
-export const GetCategoryOptions = ()=>{
+export const GetCategoryOptions = (CategoryBoolean) => {
     const array = localStorage.getItem("CategoryData") ? JSON.parse(localStorage.getItem(("CategoryData"))) : [];
-     const CategoryOptions = [];
-   array.forEach(element => {
-           if(element.Status){
-            CategoryOptions.push(element.CategoryName)
-           }
+    const CategoryOptions = [];
+    array.forEach(element => {
+        CategoryBoolean ? CategoryOptions.push(element.CategoryName) :
+        (element.Status)?CategoryOptions.push(element.CategoryName):console.log()
+        
     });
     // console.log(FilterdArray);
 
@@ -115,29 +115,106 @@ export const GetCategoryOptions = ()=>{
 
     //              }
 
-            
+
     // })
     // console.log(CategoryOptions);
     // console.log(typeof CategoryOptions);
     return CategoryOptions;
 }
-    
-export const GetCategoryDetailsByID = (ID)=>{
+
+export const GetCategoryDetailsByID = (ID) => {
     console.log(ID);
     const array = JSON.parse(localStorage.getItem("CategoryData"));
-    const CategoryObjectindex = array.findIndex(item=>item.ID==ID);
+    const CategoryObjectindex = array.findIndex(item => item.ID == ID);
     const CategoryObject = array[CategoryObjectindex];
-   
+
     return CategoryObject.CategoryName;
 }
 
-export const CategoryExistInProductTableBoolean = (id)=>{
+export const CategoryExistInProductTableBoolean = (id) => {
     const array = JSON.parse(localStorage.getItem(("ProductsData")));
     let CategoryBoolean = false;
     array.forEach(element => {
-        if(element.CategoryID==id){
+        if (element.CategoryID == id) {
             CategoryBoolean = true;
         }
     });
     return CategoryBoolean;
 }
+
+export const SortItemsAscDsc = (order, name) => {
+    console.log("Inside Product List Name");
+    console.log(order);
+    let array = [];
+    if (name == "products") {
+        array = JSON.parse(localStorage.getItem(("ProductsData")));
+    }
+    else if (name == "categories") {
+        array = JSON.parse(localStorage.getItem(("CategoryData")));
+    }
+    else {
+        return;
+    }
+    switch (order) {
+        case "1":
+            {
+                const ReversedArray = array.reverse();
+                return ReversedArray;
+                break;
+            }
+        case "-1":
+            {
+                const SortedArray = array.sort();
+                return SortedArray;
+                break;
+            }
+        case "0":
+            {
+                console.log("Unsorted");
+                return array;
+                break;
+            }
+
+        default:
+            {
+                console.log("No sort");
+                return
+                break;
+            }
+    }
+
+}
+
+export const PriceFormat = (AmountinNumber)=>{
+    let amount = String(AmountinNumber);
+    console.log(amount);
+    let newAmount = amount;
+    let str = ","
+    let NewString = ""
+    console.log(amount.length)
+    
+    if(amount.length>5){
+        console.log("hello")
+            newAmount = newAmount.split("");
+    newAmount.splice(amount.length-3,0,str);
+    newAmount.splice(amount.length-5,0,str);
+    newAmount.splice(0,0,"₹")
+    NewString = newAmount.join('')
+
+    }
+    else if(amount.length>3){
+    newAmount = newAmount.split("");
+    newAmount.splice(amount.length-3,0,str);
+    newAmount.splice(0,0,"₹")
+    NewString = newAmount.join('')
+
+    }
+    else{
+     newAmount = newAmount.split("");
+     newAmount.splice(0,0,"₹")
+     NewString = newAmount.join('')
+    }
+    
+        
+    return NewString;
+    }

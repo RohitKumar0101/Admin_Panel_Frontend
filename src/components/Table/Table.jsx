@@ -21,6 +21,7 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import "./Table.css";
 import { Categories } from '../../Pages/Categories/Categories';
 import { alignProperty } from '@mui/material/styles/cssUtils';
+import { SortMenu } from '../SortingMenu/SortingMenu';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -84,8 +85,9 @@ TablePaginationActions.propTypes = {
 };
 
 
-export const CustomTable = ({ CategoriesArray, ChangeStateFromButton, handleDeleteAgreeOpen, handleOpenEditCategoryForm, handleStatusChangeSnackbar}) => {
+export const CustomTable = ({ handleRestictEditCategory,CategoriesArray, ChangeStateFromButton,handleSortCategories, handleDeleteAgreeOpen, handleOpenEditCategoryForm, handleStatusChangeSnackbar}) => {
   const [page, setPage] = React.useState(0);
+  const [name,setName] = React.useState("categories")
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -108,12 +110,13 @@ export const CustomTable = ({ CategoriesArray, ChangeStateFromButton, handleDele
       <TableHead style={{ fontWeight: "bold" }}>
         <TableRow>
           <TableCell align='center' style={{ fontWeight: "bolder" }}>id</TableCell>
-          <TableCell align="center" style={{ fontWeight: "bolder" }}>Category Name</TableCell>
+          <TableCell align="center" style={{ fontWeight: "bolder" }}><div className='flex justify-center gap-2'><h1>Category Name</h1><SortMenu handleSort={handleSortCategories} name={name} /></div> </TableCell>
           <TableCell align="center" style={{ fontWeight: "bolder" }}>Created Date</TableCell>
           <TableCell align="center" style={{ fontWeight: "bolder" }}>Status</TableCell>
           <TableCell align="center" style={{ fontWeight: "bolder" }}>Action</TableCell>
         </TableRow>
       </TableHead>
+      
       <TableBody >
         {((rowsPerPage>0 && CategoriesArray) ? CategoriesArray.slice(page*rowsPerPage,page*rowsPerPage + rowsPerPage):CategoriesArray).map((row, key) => (
           <TableRow

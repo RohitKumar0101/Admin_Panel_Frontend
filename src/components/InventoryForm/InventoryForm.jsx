@@ -12,12 +12,12 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { CustomModal } from "../CustomModal/CustomModal";
-import { CategoriesStore } from "../../utility/Common";
+import { CategoriesStore, GetCategoryOptions } from "../../utility/Common";
  
 // console.log(MyCategory);
 // import CustomSnackbar from "../../Snackbar/Snackbar";
 
-export const InventoryForm = ({  setOpen, open, handleSnackbar,handleCategoriesArray}) => {
+export const InventoryForm = ({CategoryFilterBoolean,setOpen, open, handleSnackbar,handleCategoriesArray}) => {
 
 	const [status, setStatus] = React.useState(1);
 	// const [showErrors,setShowErrors] = React.useState();
@@ -57,7 +57,7 @@ export const InventoryForm = ({  setOpen, open, handleSnackbar,handleCategoriesA
 		CategoriesStore(e);
 		// handleSetCategory(e)
 		handleCategoriesArray();
-		 console.log(array);
+		console.log(array);
 		formik.setFieldValue("Status",1);
 		setStatus(1);
 		formik.setFieldValue("CategoryName","");
