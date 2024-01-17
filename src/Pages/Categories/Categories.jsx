@@ -140,7 +140,7 @@ export const Categories = () => {
             <div className="bg-white p-1">
                 <h3 className="text-lg font-medium w-2/6 flex justify-start  opacity-90">Manage Categories</h3>
                 <div className="flex flex-col gap-1">
-                    <div className="w-11/12 ml-14 flex justify-end mb-1">
+                    <div className="w-11/12 ml-14 flex justify-end">
                     <FilterItems CategoryFilterBoolean={CategoryFilterBoolean} options={options} handleFilterOnCategory={handleFilterOnCategory} />
                     </div>
                     <CustomTable handleRestictEditCategory={handleRestictEditCategory} handleSortCategories={handleSortCategories} CategoriesArray={CategoriesArray} handleDeleteAgreeOpen={handleDeleteAgreeOpen} ChangeStateFromButton={ChangeStateFromButton} handleStatusChangeSnackbar={handleStatusChangeSnackbar} ShowCategories={ShowCategories} handleOpenEditCategoryForm={handleOpenEditCategoryForm} />

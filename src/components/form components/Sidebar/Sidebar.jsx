@@ -8,6 +8,7 @@ import { useDropzone } from 'react-dropzone';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import TableRowsIcon from '@mui/icons-material/TableRows';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { useState } from 'react';
 
@@ -42,6 +43,10 @@ export const Sidebar = ({ userInfo }) => {
 
   const RedirectToProfile = () => {
     navigate("/profile");
+  }
+  
+  const RedirectToPOS = () => {
+    navigate("/pos");
   }
 
   const RedirectToListing = () => {
@@ -92,6 +97,10 @@ export const Sidebar = ({ userInfo }) => {
         <h1 className='font-seris  break-all'>Products</h1>
       </div>
 
+      <div className={updatedLocation == "pos" ? 'login hover:text-white  hover:bg-blue-500 hover:text-opacity-100  cursor-pointer  flex items-center justify-start h-10 text-white  bg-blue-500  gap-5 mb-2 w-full' : 'login hover:text-white  hover:bg-blue-500 hover:text-opacity-100  cursor-pointer  flex items-center justify-start h-10   bg-blue-200  gap-5 mb-2 w-full'} onClick={RedirectToPOS}>
+        <PointOfSaleIcon style={{ marginLeft: "60px" }} />
+        <h1 className='font-seris  break-all'>POS</h1>
+      </div>
 
 
       <div className={updatedLocation == "listing" ? 'login hover:text-white  hover:bg-blue-500 hover:text-opacity-100  cursor-pointer  flex items-center justify-start h-10 text-white  bg-blue-500  gap-5 mb-2 w-full' : 'login hover:text-white  hover:bg-blue-500 hover:text-opacity-100  cursor-pointer  flex items-center justify-start h-10   bg-blue-200  gap-5 mb-2 w-full'} onClick={RedirectToListing}>

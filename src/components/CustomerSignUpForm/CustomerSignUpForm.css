@@ -1,0 +1,7 @@
+.starlabel label:after {
+  color: #e32;
+  content: '*';
+  /* display:block; */
+  }
+
+  

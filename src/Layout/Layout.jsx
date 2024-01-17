@@ -1,6 +1,6 @@
 import { Divider } from "@mui/material"
 import Navbar from "../components/form components/Navbar/Navbar"
-import {Sidebar} from "../components/form components/Sidebar/Sidebar"
+import { Sidebar } from "../components/form components/Sidebar/Sidebar"
 import { Footer } from "../components/form components/Footer/Footer"
 import { useState } from "react"
 import { GoogleOAuthProvider } from "@react-oauth/google"
@@ -18,9 +18,9 @@ export const Layout = ({ file, children }) => {
         <div className="w-1/6">
             <Sidebar userInfo={userInfo} />
         </div>
-        <div className="w-5/6 flex flex-col">
+        <div className="w-5/6 flex flex-col ">
             <Navbar userInfo={userInfo} />
-            {children}
+                {children}
             <Footer />
         </div>
 

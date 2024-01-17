@@ -85,14 +85,15 @@ TablePaginationActions.propTypes = {
 };
 
 
-export const CustomTable = ({ handleRestictEditCategory,CategoriesArray, ChangeStateFromButton,handleSortCategories, handleDeleteAgreeOpen, handleOpenEditCategoryForm, handleStatusChangeSnackbar}) => {
+export const CustomTable = ({ handleRestictEditCategory, CategoriesArray, ChangeStateFromButton, handleSortCategories, handleDeleteAgreeOpen, handleOpenEditCategoryForm, handleStatusChangeSnackbar }) => {
   const [page, setPage] = React.useState(0);
-  const [name,setName] = React.useState("categories")
+  const [name, setName] = React.useState("categories")
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, CategoriesArray.length - page * rowsPerPage);
+
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - CategoriesArray.length) : 0;
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -105,8 +106,8 @@ export const CustomTable = ({ handleRestictEditCategory,CategoriesArray, ChangeS
 
 
 
-  return (<TableContainer component={Paper}>
-    <Table sx={{ minWidth: 650,minHeight:"100%" }} aria-label="simple table" >
+  return (<TableContainer component={Paper} >
+    <Table sx={{ minWidth: 650 , height:470 }} aria-label="simple table" >
       <TableHead style={{ fontWeight: "bold" }}>
         <TableRow>
           <TableCell align='center' style={{ fontWeight: "bolder" }}>id</TableCell>
@@ -116,13 +117,13 @@ export const CustomTable = ({ handleRestictEditCategory,CategoriesArray, ChangeS
           <TableCell align="center" style={{ fontWeight: "bolder" }}>Action</TableCell>
         </TableRow>
       </TableHead>
-      
+
       <TableBody >
-        {((rowsPerPage>0 && CategoriesArray) ? CategoriesArray.slice(page*rowsPerPage,page*rowsPerPage + rowsPerPage):CategoriesArray).map((row, key) => (
+        {((rowsPerPage > 0 && CategoriesArray) ? CategoriesArray.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : CategoriesArray).map((row, key) => (
           <TableRow
             key={row.CategoryName}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            style={{verticalAlign:"top !important"}}
+            style={{ verticalAlign: "top !important" }}
           >
             <TableCell align='center' component="th" scope="row">
               {row.ID}
@@ -147,10 +148,14 @@ export const CustomTable = ({ handleRestictEditCategory,CategoriesArray, ChangeS
           </TableRow>
         ))}
         {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows}}>
-              <TableCell  colSpan={5} />
-            </TableRow>
-          )}
+          <TableBody>
+            {/* {Array.from({ length: emptyRows }, (_, index) => (
+              <TableRow key={index} style={{ height: 53 }}>
+                <TableCell colSpan={9} />
+              </TableRow>
+            ))} */}
+          </TableBody>
+        )}
       </TableBody>
       <TableFooter>
         <TableRow>
@@ -169,8 +174,8 @@ export const CustomTable = ({ handleRestictEditCategory,CategoriesArray, ChangeS
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
             ActionsComponent={TablePaginationActions}
-            
-            
+
+
           />
         </TableRow>
       </TableFooter>

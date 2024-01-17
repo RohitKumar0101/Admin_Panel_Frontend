@@ -10,13 +10,13 @@ import { InventoryForm } from '../InventoryForm/InventoryForm';
 
 
 
-export const CustomModal = ({open,children,height})=>{
+export const CustomModal = ({open,children,height,width})=>{
   const style = {
     position: 'absolute',
-    top: '45%',
+    top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 650,
+    width: width||650,
     height: {height},
     backgroundColor: "white",
     boxShadow: 24,
@@ -44,7 +44,7 @@ export const CustomModal = ({open,children,height})=>{
           {/* <div className='w-11/12 flex justify-end items-end ml-9 '>
             <button onClick={handleClose}><CloseIcon sx={{'&:hover':{backgroundColor:"lightBLue"}}} style={{ color: "red",height:"20px",borderRadius:"3px"}} /></button>
           </div> */}
-          <div className='relative'>
+          <div className='relative h-full'>
             {children}
           </div>
         </Box>

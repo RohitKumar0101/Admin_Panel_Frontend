@@ -32,6 +32,25 @@ export const CategoriesStore = (e) => {
 }
 
 
+
+
+
+export const GiveProductsOfCategory = (ID)=>{
+    const ProductsData = localStorage.getItem("ProductsData") ? JSON.parse(localStorage.getItem("ProductsData")) : [];
+
+    let FilteredProducts = ProductsData.filter((product)=>{
+            return product.CategoryID==ID
+    })
+
+    FilteredProducts = FilteredProducts.map((product)=>{
+        return {...product,Quantity:0,Total:0};
+    })
+
+    console.log(FilteredProducts);         
+
+    return FilteredProducts;
+}
+
 export const GetCategoriesData = () => {
     const myData = localStorage.getItem("CategoryData") ? JSON.parse(localStorage.getItem("CategoryData")) : [];
     return myData;

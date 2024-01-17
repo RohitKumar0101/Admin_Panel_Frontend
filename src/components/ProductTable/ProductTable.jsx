@@ -93,15 +93,14 @@ export const ProductTable = ({ handleSort, ShowNewProducts, handleProductDeleteS
   const [name, setName] = React.useState("products");
   const ProductDeleteBoolean = true;
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - ProductsArray.length) : 0;
+  const emptyRows =rowsPerPage - Math.min(rowsPerPage, ProductsArray.length - page * rowsPerPage);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+  const handleChangeRowsPerPage = () => {
+    setRowsPerPage(5);
     setPage(0);
   };
 
@@ -119,7 +118,7 @@ export const ProductTable = ({ handleSort, ShowNewProducts, handleProductDeleteS
 
 
   return (<TableContainer component={Paper}>
-    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
+    <Table sx={{ minWidth: 650 , height:470 }} aria-label="simple table" >
         <TableHead style={{ fontWeight: "bold" }}>
           <TableRow>
             <TableCell align='center' style={{ fontWeight: "bolder" }}>id</TableCell>
@@ -170,10 +169,14 @@ export const ProductTable = ({ handleSort, ShowNewProducts, handleProductDeleteS
           </TableRow>
         ))}
         {emptyRows > 0 && (
-          <TableRow style={{ height: 53 * emptyRows }}>
-            <TableCell colSpan={9} />
-          </TableRow>
-        )}
+  <TableBody>
+    {/* {Array.from({ length: emptyRows }, (_, index) => (
+      <TableRow key={index} style={{ height: 53 }} >
+        <TableCell colSpan={9}> </TableCell>
+      </TableRow>
+    ))} */}
+  </TableBody>
+)}
       </TableBody>
           : 
           <TableBody colSpan="9">
