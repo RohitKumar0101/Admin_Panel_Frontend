@@ -18,12 +18,16 @@ const SignupSchema = Yup.object().shape({
   Email: Yup.string().email('Invalid email').required('Required'),
 });
 
-export const CustomerSignUpForm = ({ open,setOpenCreateCustomerForm }) => {
+export const CustomerSignUpForm = ({handleAddUserSnackbar,open,setOpenCreateCustomerForm }) => {
 
 
   const handleCustomerSignUpDetails = (e)=>{
     SetCustomerDetails(e);
     handleCloseCustomerSignUpForm();
+    // setTimeout(() => {
+    //   handleAddUserSnackbar();
+    // }, 1000);
+    // handleAddUserSnackbar();
   }
 
   const handleCloseCustomerSignUpForm = ()=>{

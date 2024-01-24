@@ -128,7 +128,7 @@ function Navbar({userInfo}) {
             LOGO
           </Typography> */}
           <Box sx={{ flexGrow: 1,display:"flex !important" }}>
-            <h1 className='text-3xl font-medium font-mono'>{myLocation.toUpperCase()}</h1>
+            <h1 className='text-3xl font-medium font-mono'>{myLocation.toUpperCase()=="POS"?"POS-Billing":myLocation.toUpperCase()}</h1>
           </Box>
 
           <Box sx={{ flexGrow: 0, display: {xs:"flex",sm:"flex",md:"flex",}}}>

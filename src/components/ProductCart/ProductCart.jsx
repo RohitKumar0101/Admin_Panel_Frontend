@@ -23,8 +23,9 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function ProductCart({ ID, refresh, setRefresh }) {
+export default function ProductCart({ ID, refresh, setRefresh,handleUnavailableSnackbar }) {
     // const [products,setProducts] = React.useState(GiveProductsOfCategory(ID));
+
 
   let products = GiveProductsOfCategory(ID);
   if (products < 5) {
@@ -79,20 +80,22 @@ export default function ProductCart({ ID, refresh, setRefresh }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {products.map((product) => (
-            <TableRow
+          
+            {products.length>1?products.map((product) => (
+              <TableRow
               key={product.ID}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+              >
               <TableCell component="th" scope="row" width={200}>
-                {product.ProductName}
+              {product.ProductName}
               </TableCell>
               <TableCell align="center">{product.Status == 1 ? <div className='flex justify-center'><h1 className='bg-green-400 w-2/12  font-bold text-white rounded'>A</h1></div> : <div className='flex justify-center'><h1 className='bg-red-500 w-2/12  font-bold text-white rounded'>UA</h1></div>}</TableCell>
               <TableCell align="center">{PriceFormat(product.ProductPrice)}</TableCell>
-              <TableCell align="center"><QuantityInput handleRefresh={handleRefresh} data={product} /></TableCell>
+              <TableCell align="center"><QuantityInput handleUnavailableSnackbar={handleUnavailableSnackbar} handleRefresh={handleRefresh}  data={product} /></TableCell>
               <TableCell align="center">{PriceFormat(GetTotalByID(product.ID))}</TableCell>
             </TableRow>
-          ))}
+            )):<TableRow colSpan="5" ><TableCell align='center' height={320} colSpan={9}>No Products Added</TableCell></TableRow>}
+            
         </TableBody>
         {/* {emptyRows > 0 && (
           <TableBody>

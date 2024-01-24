@@ -86,7 +86,7 @@ export const AddEditProduct = (data) => {
     const array = JSON.parse(localStorage.getItem(("ProductsData")));
 
     const indexToUpdate = array.findIndex(item => item.ID === data.ID);
-    // console.log(indexToUpdate);
+    console.log(indexToUpdate);
     array[indexToUpdate] = data;
     localStorage.setItem("ProductsData", JSON.stringify(array));
 }
@@ -206,14 +206,11 @@ export const SortItemsAscDsc = (order, name) => {
 
 export const PriceFormat = (AmountinNumber)=>{
     let amount = String(AmountinNumber);
-    console.log(amount);
     let newAmount = amount;
     let str = ","
     let NewString = ""
-    console.log(amount.length)
     
     if(amount.length>5){
-        console.log("hello")
             newAmount = newAmount.split("");
     newAmount.splice(amount.length-3,0,str);
     newAmount.splice(amount.length-5,0,str);

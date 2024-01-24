@@ -12,6 +12,8 @@ import { BlockPage } from './Pages/BlockPage/BlockPage';
 import { Categories } from './Pages/Categories/Categories';
 import { Products } from './Pages/ProductPage/Products';
 import { POS } from './Pages/POS Page/POS';
+import { BillTemplate } from './Pages/templates/Bill.template';
+
 
 
 function App() {
@@ -33,6 +35,7 @@ function App() {
           <Route path='/pos' element={<POS file={file}/>} />
           <Route path='/block' element={<BlockPage file={file}/>} />
           <Route path='/categories' element={<Categories file={file}/>} />
+          <Route path='/bill' element={<BillTemplate />}/>
         </Routes>
       </Router>
     </div>

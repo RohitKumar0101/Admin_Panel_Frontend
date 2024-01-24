@@ -7,68 +7,90 @@ import AddIcon from '@mui/icons-material/Add';
 import { GetQuantityByID, SetQuantityByID } from '../../utility/SessionStorage';
 
 const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
-    const [value,setValue] = React.useState(GetQuantityByID(props.data.ID));
-  
-    
-    const handleQuantity = (event,val)=>{
-      if(val==null){
-        setValue(0);
-        return;
-      }
-     
-        setValue(val);
-        SetQuantityByID(val,props.data);
-        props.handleRefresh();
-      
-
+  const [value,setValue] = React.useState((props.data.Status) ? GetQuantityByID(props.data.ID) : 0);
+ 
+  React.useEffect(() => {
+    if (props.data.Status == false) {
+      console.log("The Selected product is non active inside useEffect");
+      SetQuantityByID(0, props.data);      
+      return;
     }
-    
-    return (
-        <BaseNumberInput
-        value={value}
-        onChange={handleQuantity}
+  },[])
 
-        // defaultValue={0}
-        // readOnly={true}
+  const showUnavailableSnackbar = ()=>{
+         setTimeout(() => {
+          props.handleUnavailableSnackbar();
+          return;
+         }, 2000);
+  }
 
-        slots={{
-            root: StyledInputRoot,
-            input: StyledInput,
-            incrementButton: StyledButton,
-            decrementButton: StyledButton,
-        }}
+
+  const handleQuantity = (event, val) => {
+    if (val == null) {
+      setValue(0);
+      return;
+    }
+
+    if (props.data.Status == false) {
+      console.log("You are Incrementing a false product");
+      props.handleUnavailableSnackbar();
+      showUnavailableSnackbar();
+      return;
+    }
+    else{
+      setValue(val);
+      SetQuantityByID(val, props.data);
+      props.handleRefresh();
+      return;
+    }
+  }
+
+  return (
+    <BaseNumberInput
+      value={value}
+      onChange={handleQuantity}
+
+      // defaultValue={0}
+      // readOnly={true}
+
+      slots={{
+        root: StyledInputRoot,
+        input: StyledInput,
+        incrementButton: StyledButton,
+        decrementButton: StyledButton,
+      }}
       slotProps={{
         incrementButton: {
-            children: <AddIcon fontSize="small" />,
-            className: 'increment',
-            
+          children: <AddIcon fontSize="small" />,
+          className: 'increment',
+
         },
         decrementButton: {
-            children: <RemoveIcon fontSize="small" />,
-            
+          children: <RemoveIcon fontSize="small" />,
+
         },
-        input:{
-          disabled:true
+        input: {
+          disabled: true
         }
-              
-        
+
+
       }}
       {...props}
       ref={ref}
-      />
-      );
-    });
-    
-    export const QuantityInput = ({data,handleRefresh})=>{
-        return <NumberInput aria-label="Quantity Input" min={0} max={99} data={data} handleRefresh={handleRefresh}/>;
-    }
-    
-    const blue = {
-        100: '#daecff',
-        200: '#b6daff',
-        300: '#66b2ff',
-        400: '#3399ff',
-        500: '#007fff',
+    />
+  );
+});
+
+export const QuantityInput = ({ data, handleRefresh,handleUnavailableSnackbar }) => {
+  return <NumberInput aria-label="Quantity Input" min={0} max={99}  data={data} handleUnavailableSnackbar={handleUnavailableSnackbar} handleRefresh={handleRefresh} />;
+}
+
+const blue = {
+  100: '#daecff',
+  200: '#b6daff',
+  300: '#66b2ff',
+  400: '#3399ff',
+  500: '#007fff',
   600: '#0072e5',
   700: '#0059B2',
   800: '#004c99',
@@ -108,9 +130,8 @@ const StyledInput = styled('input')(
   color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
   background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
   border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
-  box-shadow: 0px 2px 4px ${
-    theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.5)' : 'rgba(0,0,0, 0.05)'
-  };
+  box-shadow: 0px 2px 4px ${theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.5)' : 'rgba(0,0,0, 0.05)'
+    };
   border-radius: 8px;
   margin: 0 8px;
   padding: 10px 12px;
@@ -156,7 +177,7 @@ const StyledButton = styled('button')(
   align-items: center;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 120ms;
+  transition-dura tion: 120ms;
 
   &:hover {
     cursor: pointer;

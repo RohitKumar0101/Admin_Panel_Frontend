@@ -11,7 +11,6 @@ import { GoogleOAuthProvider } from "@react-oauth/google"
 //     </div>
 // }
 export const Layout = ({ file, children }) => {
-    console.log(file, '-------- here ----------')
     const userInfo = JSON.parse(localStorage.getItem("LoggedUserData"));
     return <div className="flex  w-full h-screen bg-gray-100">
         {/* <div className="w-1/6 min-h-[calc(100vh-73.6px)]"> */}

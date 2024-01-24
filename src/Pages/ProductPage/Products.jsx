@@ -11,6 +11,7 @@ import { AddProductForm } from "../../components/AddProductForm/AddProductForm";
 import { ProductTable } from "../../components/ProductTable/ProductTable";
 import { EditProductDetailsForm } from "../../components/EditProductDetailsForm/EditProductDetailsForm";
 import { FilterItems } from "../../components/FilterItems/FilterItems";
+import { ChangeCartProductStatus } from "../../utility/SessionStorage";
 
 
 
@@ -58,10 +59,11 @@ export const Products = ({ file }) => {
             console.log(row.ID);
             console.log(e.target.id);
             if (row.ID == e.target.id) {
+                ChangeCartProductStatus(row.ID);
                 return { ...row, Status: !row.Status }
             }
             return row
-        })
+        })  
         console.log(NewArray);
         // CategoriesArray = NewArray;
         ChangeProductsData(NewArray);
