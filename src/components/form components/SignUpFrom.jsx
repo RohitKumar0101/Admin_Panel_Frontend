@@ -4,7 +4,7 @@ import "./SignUpForm.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Button, Snackbar } from "@mui/material";
 import { useEffect } from "react";
-import CustomSnackbar from "../Snackbar/Snackbar";
+import {CustomSnackbar} from "../Snackbar/Snackbar";
 // import { Button } from "../Button/Button";
 export const SignUpForm = ({ setIsSignUP,open,handleSnacker}) => {
 	const navigate = useNavigate();

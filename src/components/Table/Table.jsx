@@ -23,7 +23,7 @@ import { Categories } from '../../Pages/Categories/Categories';
 import { alignProperty } from '@mui/material/styles/cssUtils';
 import { SortMenu } from '../SortingMenu/SortingMenu';
 
-function TablePaginationActions(props) {
+const TablePaginationActions = (props)=>{
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 

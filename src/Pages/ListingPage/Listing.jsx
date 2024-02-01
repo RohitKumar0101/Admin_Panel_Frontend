@@ -1,5 +1,5 @@
 import { Layout } from "../../Layout/Layout"
-import ListingTable from "../../components/lisitngTable/ListingTable";
+import {ListingTable} from "../../components/lisitngTable/ListingTable";
 import React from "react";
 import "./Listing.css";
 import { SearchOff } from "@mui/icons-material";

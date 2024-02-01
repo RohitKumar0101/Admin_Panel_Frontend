@@ -2,11 +2,7 @@ import { useCallback, useState } from "react";
 import { Layout } from "../../Layout/Layout"
 import "./Profile.css";
 import { useDropzone } from "react-dropzone";
-import { getIn } from "formik";
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import EditIcon from '@mui/icons-material/Edit';
-import { hover } from "@testing-library/user-event/dist/hover";
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import {EditTable} from "../../components/form components/modal/modal";
 import { useLocation } from "react-router-dom";

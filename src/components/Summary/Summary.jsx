@@ -2,24 +2,25 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { CartTotalAmount } from '../../utility/SessionStorage';
+import { CartTotalAmount } from '../../utility/Common2';
 import { height } from '@mui/system';
 import { PriceFormat } from '../../utility/Common';
 import CloseIcon from '@mui/icons-material/Close';
 import { Tooltip } from '@mui/material';
 
-export const Summary = ({downloadPdf,cartItems,toggleDrawer,state,closeDrawer,handlePaymentCompletionModal})=>{
+export const Summary = ({loggedCustomerIndex,loggedCustomerMobileID,downloadPdf,cartItems,toggleDrawer,state,closeDrawer,handlePaymentCompletionModal})=>{ 
+  if(loggedCustomerIndex<0){
+    console.log("Not rendering summary due to logged cutomer Index -1")
+    return;
+  }
+  if(!cartItems){
+    return;
+  }
 
- 
-  let Amount = CartTotalAmount();
+  console.log("Cart Items in Summary");
+  console.log(cartItems);
+  let Amount = CartTotalAmount(loggedCustomerIndex);
+
   const handleClose = ()=>{
     console.log("Closing summary section")
     closeDrawer("right", false);

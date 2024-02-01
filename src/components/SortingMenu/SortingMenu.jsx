@@ -1,6 +1,5 @@
 
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
@@ -10,10 +9,9 @@ import MenuList from '@mui/material/MenuList';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import Stack from '@mui/material/Stack';
-import { SortItemsAscDsc} from '../../utility/Common';
+import { SortItemsAscDsc } from '../../utility/Common';
 
-export const SortMenu = ({ handleSort,name }) => {
+export const SortMenu = ({ handleSort, name }) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -31,17 +29,17 @@ export const SortMenu = ({ handleSort,name }) => {
   };
 
   const SortProducts = (event) => {
-    if(event.target.id){
-      const sortedArray = SortItemsAscDsc(event.target.id,name);
+    if (event.target.id) {
+      const sortedArray = SortItemsAscDsc(event.target.id, name);
       handleSort(sortedArray);
       // setOpen(false);
       handleClose(event);
     }
-    else{
+    else {
 
     }
-    }
-  function handleListKeyDown(event) {
+  }
+  const handleListKeyDown = (event) => {
     if (event.key === 'Tab') {
       event.preventDefault();
       setOpen(false);
@@ -98,9 +96,9 @@ export const SortMenu = ({ handleSort,name }) => {
                   aria-labelledby="composition-button"
                   onKeyDown={handleListKeyDown}
                 >
-                  <MenuItem  id='1' onClick={SortProducts}><div className='flex w-full'><ArrowUpwardIcon id='1' onClick={SortProducts} fontSize='small' color='action' /><h1 id='1' className='ml-2 text-opacity-75' onClick={SortProducts}>Sort in ASC</h1></div></MenuItem>
-                  <MenuItem  id='-1' onClick={SortProducts}><div className='flex w-full'>< ArrowDownwardIcon id='-1' onClick={SortProducts} fontSize='small' color='action' /><h1 id='-1' onClick={SortProducts} className='ml-2 text-opacity-75'>Sort in DSC</h1></div></MenuItem>
-                  <MenuItem  id='0' onClick={SortProducts}><div className='flex w-full'><h1 className='ml-7 '>   </h1><h1 id='0' onClick={SortProducts} className='text-opacity-75'>Unsort</h1></div></MenuItem>
+                  <MenuItem id='1' onClick={SortProducts}><div className='flex w-full'><ArrowUpwardIcon id='1' onClick={SortProducts} fontSize='small' color='action' /><h1 id='1' className='ml-2 text-opacity-75' onClick={SortProducts}>Sort in ASC</h1></div></MenuItem>
+                  <MenuItem id='-1' onClick={SortProducts}><div className='flex w-full'>< ArrowDownwardIcon id='-1' onClick={SortProducts} fontSize='small' color='action' /><h1 id='-1' onClick={SortProducts} className='ml-2 text-opacity-75'>Sort in DSC</h1></div></MenuItem>
+                  <MenuItem id='0' onClick={SortProducts}><div className='flex w-full'><h1 className='ml-7 '>   </h1><h1 id='0' onClick={SortProducts} className='text-opacity-75'>Unsort</h1></div></MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>

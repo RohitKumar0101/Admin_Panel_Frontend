@@ -7,7 +7,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import "./SignInForm.css";
 import { Button } from "@mui/material";
-import CustomSnackbar from "../Snackbar/Snackbar";
+import {CustomSnackbar} from "../Snackbar/Snackbar";
 import GoogleIcon from '@mui/icons-material/Google';
 import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";

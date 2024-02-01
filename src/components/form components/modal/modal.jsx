@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Tooltip } from '@mui/material';
 import { hover } from '@testing-library/user-event/dist/hover';
 import { blue, green } from '@mui/material/colors';
-import CustomSnackbar from '../../Snackbar/Snackbar';
+import {CustomSnackbar} from '../../Snackbar/Snackbar';
 
 const style = {
   position: 'absolute',

@@ -5,15 +5,11 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 // import "./InventoryForm.css";
 // import "./SignUpForm.css"; 
-import { Navigate, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 // import "./InventoryForm.css";
 import "./EditCategoryForm.css";
 import React, { useEffect } from "react";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import dayjs from 'dayjs';
-import { LocalizationProvider } from "@mui/x-date-pickers";
 import { CustomModal } from "../CustomModal/CustomModal";
 import { AddEditCategory, CategoriesStore, CategoryExistInProductTableBoolean } from "../../utility/Common";
 

@@ -1,12 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import EditIcon from '@mui/icons-material/Edit';
-import { Tooltip } from '@mui/material';
-// import CustomSnackbar from '../../Snackbar/Snackbar';
-import { InventoryForm } from '../InventoryForm/InventoryForm';
 
 
 
@@ -20,7 +14,7 @@ export const CustomModal = ({open,children,height,width})=>{
     height: {height},
     backgroundColor: "white",
     boxShadow: 24,
-    borderRadius: 3,
+    // borderRadius: 3,
   
   
   };

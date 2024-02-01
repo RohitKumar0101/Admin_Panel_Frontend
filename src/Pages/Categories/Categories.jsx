@@ -3,7 +3,7 @@ import { Layout } from "../../Layout/Layout"
 import { CustomTable } from "../../components/Table/Table"
 import React, { useState } from "react";
 import { InventoryForm } from "../../components/InventoryForm/InventoryForm";
-import CustomSnackbar from "../../components/Snackbar/Snackbar";
+import {CustomSnackbar} from "../../components/Snackbar/Snackbar";
 import { CategoryExistInProductTableBoolean, ChangeCategoriesStore, GetCategoriesData, GetCategoryOptions } from "../../utility/Common";
 import { EditCategoryForm } from "../../components/EditCategoryForm/EditCategoryForm";
 import { ConfirmDailog } from "../../components/ConfirmationDailog/ConfirmationDailog";

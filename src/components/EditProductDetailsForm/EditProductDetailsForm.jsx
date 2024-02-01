@@ -5,14 +5,10 @@ import { useFormik } from "formik";
 import { Navigate, useNavigate } from "react-router-dom";
 // import "./InventoryForm.css";
 import "./EditProductDetailsForm.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { CustomSelect } from "../CustomSelect/CustomSelect";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import dayjs from 'dayjs';
-import { LocalizationProvider } from "@mui/x-date-pickers";
 import { CustomModal } from "../CustomModal/CustomModal";
-import { AddEditCategory, AddEditProduct, CategoriesStore, GetCategoryDetailsByID } from "../../utility/Common";
+import { AddEditProduct, GetCategoryDetailsByID } from "../../utility/Common";
 import { CategorySelect } from "../CategorySelect/CategorySelect";
 
 // console.log(MyCategory);

@@ -9,6 +9,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { useState } from 'react';
 
@@ -48,6 +49,11 @@ export const Sidebar = ({ userInfo }) => {
   const RedirectToPOS = () => {
     navigate("/pos");
   }
+  
+  const RedirectToPOSOrders = () => {
+    navigate("/pos/orders");
+  }
+
 
   const RedirectToListing = () => {
     navigate("/listing");
@@ -102,6 +108,10 @@ export const Sidebar = ({ userInfo }) => {
         <h1 className='font-seris  break-all'>POS</h1>
       </div>
 
+      <div className={updatedLocation == "pos/orders" ? 'login hover:text-white  hover:bg-blue-500 hover:text-opacity-100  cursor-pointer  flex items-center justify-start h-10 text-white  bg-blue-500  gap-5 mb-2 w-full' : 'login hover:text-white  hover:bg-blue-500 hover:text-opacity-100  cursor-pointer  flex items-center justify-start h-10   bg-blue-200  gap-5 mb-2 w-full'} onClick={RedirectToPOSOrders} >
+        <ChecklistRtlIcon style={{ marginLeft: "60px" }} />
+        <h1 className='font-seris  break-all'>Orders Listing</h1>
+      </div>
 
       <div className={updatedLocation == "listing" ? 'login hover:text-white  hover:bg-blue-500 hover:text-opacity-100  cursor-pointer  flex items-center justify-start h-10 text-white  bg-blue-500  gap-5 mb-2 w-full' : 'login hover:text-white  hover:bg-blue-500 hover:text-opacity-100  cursor-pointer  flex items-center justify-start h-10   bg-blue-200  gap-5 mb-2 w-full'} onClick={RedirectToListing}>
         <ListAltIcon style={{ marginLeft: "60px" }} />

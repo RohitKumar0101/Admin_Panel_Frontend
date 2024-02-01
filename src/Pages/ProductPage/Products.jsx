@@ -3,7 +3,7 @@ import { Layout } from "../../Layout/Layout"
 import { CustomTable } from "../../components/Table/Table"
 import React, { useEffect, useState } from "react";
 import { InventoryForm } from "../../components/InventoryForm/InventoryForm";
-import CustomSnackbar from "../../components/Snackbar/Snackbar";
+import {CustomSnackbar} from "../../components/Snackbar/Snackbar";
 import { ChangeCategoriesStore, ChangeProductsData, GetCategoriesData, GetCategoryOptions, GetProductOptions } from "../../utility/Common";
 import { EditCategoryForm } from "../../components/EditCategoryForm/EditCategoryForm";
 import { ConfirmDailog } from "../../components/ConfirmationDailog/ConfirmationDailog";
@@ -11,8 +11,7 @@ import { AddProductForm } from "../../components/AddProductForm/AddProductForm";
 import { ProductTable } from "../../components/ProductTable/ProductTable";
 import { EditProductDetailsForm } from "../../components/EditProductDetailsForm/EditProductDetailsForm";
 import { FilterItems } from "../../components/FilterItems/FilterItems";
-import { ChangeCartProductStatus } from "../../utility/SessionStorage";
-
+import { ChangeCartProductStatus } from "../../utility/Common2";
 
 
 export const Products = ({ file }) => {

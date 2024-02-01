@@ -4,15 +4,16 @@ import { styled } from '@mui/system';
 import RemoveIcon from '@mui/icons-material/Remove';
 import "./QuantityInput.css";
 import AddIcon from '@mui/icons-material/Add';
-import { GetQuantityByID, SetQuantityByID } from '../../utility/SessionStorage';
+import { GetQuantityByID, SetQuantityByID } from '../../utility/Common2';
 
 const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
-  const [value,setValue] = React.useState((props.data.Status) ? GetQuantityByID(props.data.ID) : 0);
- 
+  const [value,setValue] = React.useState((props.data.Status) ? GetQuantityByID(props.data.ID,props.loggedCustomerIndex) : 0);
+
   React.useEffect(() => {
     if (props.data.Status == false) {
       console.log("The Selected product is non active inside useEffect");
-      SetQuantityByID(0, props.data);      
+       console.log(props.loggedCustomerIndex)
+      SetQuantityByID(0,props.data,props.loggedCustomerIndex);      
       return;
     }
   },[])
@@ -39,7 +40,7 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
     }
     else{
       setValue(val);
-      SetQuantityByID(val, props.data);
+      SetQuantityByID(val, props.data , props.loggedCustomerIndex);
       props.handleRefresh();
       return;
     }
@@ -81,8 +82,9 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   );
 });
 
-export const QuantityInput = ({ data, handleRefresh,handleUnavailableSnackbar }) => {
-  return <NumberInput aria-label="Quantity Input" min={0} max={99}  data={data} handleUnavailableSnackbar={handleUnavailableSnackbar} handleRefresh={handleRefresh} />;
+export const QuantityInput = ({ data, handleRefresh,handleUnavailableSnackbar,loggedCustomerIndex}) => {
+  console.log(loggedCustomerIndex)
+  return <NumberInput aria-label="Quantity Input" min={0} max={99} loggedCustomerIndex={loggedCustomerIndex}  data={data} handleUnavailableSnackbar={handleUnavailableSnackbar} handleRefresh={handleRefresh} />;
 }
 
 const blue = {

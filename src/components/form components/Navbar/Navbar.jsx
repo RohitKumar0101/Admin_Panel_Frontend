@@ -19,7 +19,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function Navbar({userInfo}) {
+const Navbar = ({userInfo})=> {
   const myLocation = useLocation().pathname.substring(1);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

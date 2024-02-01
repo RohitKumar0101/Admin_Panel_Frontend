@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
-import { useDemoData } from '@mui/x-data-grid-generator';
+import {GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 
 
-function CustomToolbar() {
+const CustomToolbar = ()=>{
   return (
     <GridToolbarContainer>
         <GridToolbarExport />
@@ -41,7 +40,7 @@ const Mydata=[
   { id: 26, lastName: 'Frances', firstName: 'Rossini', age: 36 },
   { id: 27, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
-export default function ExportCustomToolbar() {
+export const  ExportCustomToolbar = ()=>{
   // const { data, loading } =  useDemoData({
   //   dataSet: 'Employee',
   //   rowLength: 4,

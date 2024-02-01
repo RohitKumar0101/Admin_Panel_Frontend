@@ -67,7 +67,7 @@ const OrignalArray = [
 
 
 
-export default function ListingTable() {
+export const ListingTable = ()=>{
     const [ProductsArray, setProductsArray] = React.useState(localStorage.getItem("ProductsData") ? JSON.parse(localStorage.getItem(("ProductsData"))) : []);
     const [rows, setRows] = React.useState(ProductsArray);
     const [searched, setSearched] = React.useState("");
